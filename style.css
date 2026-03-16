@@ -1,0 +1,320 @@
+:root {
+    --bg-dark: #000000;
+    --card-bg: #111111;
+    --brand-red: #E31B23;
+    --brand-red-glow: rgba(227, 27, 35, 0.2);
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --border: rgba(255, 255, 255, 0.1);
+    --input-bg: #1a1a1a;
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    padding: 20px 0;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.logo-coliseu {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+    letter-spacing: 2px;
+    color: white;
+    -webkit-text-stroke: 1px var(--brand-red);
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.progress-container {
+    height: 4px;
+    background: #222;
+    border-radius: 2px;
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--brand-red);
+    width: 20%;
+    transition: width 0.5s ease;
+}
+
+.step-indicator {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #666;
+}
+
+h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 28px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    border-left: 4px solid var(--brand-red);
+    padding-left: 12px;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+.quiz-step {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.quiz-step.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Form Styles */
+.input-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--brand-red);
+    margin-bottom: 8px;
+}
+
+input[type="text"], input[type="tel"], textarea {
+    width: 100%;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    padding: 15px;
+    border-radius: 4px;
+    color: white;
+    font-size: 16px;
+}
+
+.radio-group.row {
+    display: flex;
+    gap: 12px;
+}
+
+.radio-item.big {
+    flex: 1;
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    padding: 20px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.radio-item.big input { display: none; }
+.radio-item.big .icon { font-size: 30px; display: block; margin-bottom: 10px; }
+.radio-item.big .label { display: block; font-weight: 800; font-size: 13px; text-transform: uppercase; }
+
+.radio-item.big:has(input:checked) {
+    border-color: var(--brand-red);
+    background: rgba(227, 27, 35, 0.1);
+}
+
+.radio-item.chip {
+    flex: 1;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    padding: 12px;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.radio-item.chip input { display: none; }
+.radio-item.chip:has(input:checked) {
+    background: var(--brand-red);
+    color: white;
+    border-color: var(--brand-red);
+}
+
+/* Modelo 1: Preference List */
+.preference-list-container {
+    margin-bottom: 20px;
+}
+
+.preference-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    max-height: 250px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.preference-item {
+    background: #111;
+    border: 1px solid #222;
+    padding: 12px 15px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: fadeInSlide 0.3s ease;
+}
+
+@keyframes fadeInSlide {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.preference-info {
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.preference-info span {
+    color: var(--brand-red);
+    margin-right: 8px;
+}
+
+.btn-remove {
+    background: transparent;
+    border: none;
+    color: #444;
+    cursor: pointer;
+    font-size: 18px;
+    transition: var(--transition);
+}
+
+.btn-remove:hover {
+    color: var(--brand-red);
+}
+
+.add-schedule-control {
+    background: #111;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px dashed #333;
+}
+
+.selector-row {
+    display: flex;
+    gap: 10px;
+}
+
+.custom-select {
+    flex: 1;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    color: white;
+    padding: 12px;
+    border-radius: 4px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    outline: none;
+}
+
+.btn-add {
+    background: var(--brand-red);
+    color: white;
+    border: none;
+    padding: 0 20px;
+    border-radius: 4px;
+    font-weight: 800;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-add span { font-size: 20px; line-height: 0; margin-top: -2px; }
+
+@media (max-width: 600px) {
+    .selector-row { flex-direction: column; }
+    .btn-add { padding: 15px; justify-content: center; }
+}
+
+.selection-footer {
+    background: #0a0a0a;
+    padding: 12px;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #666;
+    margin-top: 10px;
+    border: 1px solid #1a1a1a;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.btn-primary {
+    flex: 1;
+    background: var(--brand-red);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 4px;
+    font-weight: 800;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.btn-outline {
+    background: transparent;
+    color: white;
+    border: 1px solid #333;
+    padding: 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.success-modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.95);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-inner {
+    background: #111;
+    border: 1px solid var(--brand-red);
+    padding: 40px;
+    text-align: center;
+    max-width: 400px;
+}

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scanner Coliseu | Grade Inteligente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;800&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-coliseu">COLISEU</div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <p class="step-indicator" id="step-indicator">Passo 1 de 5</p>
+        </header>
+
+        <form id="quiz-form">
+            <!-- Passo 1: Identidade -->
+            <section class="quiz-step active" data-step="1">
+                <h1>IDENTIDADE</h1>
+                <p class="subtitle">Como podemos te identificar?</p>
+                <div class="input-group">
+                    <label>Nome Completo</label>
+                    <input type="text" id="name" placeholder="Digite seu nome..." required>
+                </div>
+                <div class="input-group">
+                    <label>WhatsApp</label>
+                    <input type="tel" id="whatsapp" placeholder="(00) 00000-0000" required>
+                </div>
+            </section>
+
+            <!-- Passo 2: Tipo de Plano -->
+            <section class="quiz-step" data-step="2">
+                <h1>TIPO DE PLANO</h1>
+                <p class="subtitle">Como você costuma acessar o Coliseu?</p>
+                <div class="radio-group row">
+                    <label class="radio-item big">
+                        <input type="radio" name="plan_type" value="Normal" required>
+                        <span class="icon">🏛️</span>
+                        <span class="label">PLANO NORMAL</span>
+                    </label>
+                    <label class="radio-item big">
+                        <input type="radio" name="plan_type" value="Pass">
+                        <span class="icon">🎫</span>
+                        <span class="label">PLANO PASS</span>
+                        <small>Gympass/TotalPass</small>
+                    </label>
+                </div>
+            </section>
+
+            <!-- Passo 3: Frequência -->
+            <section class="quiz-step" data-step="3">
+                <h1>FREQUÊNCIA</h1>
+                <p class="subtitle">Quantas vezes na semana você pretende treinar?</p>
+                <div class="radio-group row">
+                    <label class="radio-item chip">
+                        <input type="radio" name="frequency" value="2x" required>
+                        <span>2x</span>
+                    </label>
+                    <label class="radio-item chip">
+                        <input type="radio" name="frequency" value="3x">
+                        <span>3x</span>
+                    </label>
+                    <label class="radio-item chip">
+                        <input type="radio" name="frequency" value="5x">
+                        <span>5x</span>
+                    </label>
+                    <label class="radio-item chip">
+                        <input type="radio" name="frequency" value="Outro">
+                        <span>OUTRO</span>
+                    </label>
+                </div>
+            </section>
+
+            <!-- Passo 4: Grade de Horários (Modelo 1: Fila de Preferência) -->
+            <section class="quiz-step" data-step="4">
+                <h1>SUA GRADE IDEAL</h1>
+                <p class="subtitle">Adicione os dias e horários que você pretende treinar.</p>
+                
+                <div class="preference-list-container">
+                    <div id="preference-list" class="preference-list">
+                        <!-- Itens adicionados aparecem aqui -->
+                    </div>
+
+                    <div class="add-schedule-control">
+                        <div class="selector-row">
+                            <select id="day-selector" class="custom-select">
+                                <option value="" disabled selected>Dia</option>
+                                <option value="SEG">Segunda</option>
+                                <option value="TER">Terça</option>
+                                <option value="QUA">Quarta</option>
+                                <option value="QUI">Quinta</option>
+                                <option value="SEX">Sexta</option>
+                                <option value="SAB">Sábado</option>
+                            </select>
+                            <select id="time-selector" class="custom-select">
+                                <option value="" disabled selected>Horário</option>
+                                <!-- JS Generated Hours -->
+                            </select>
+                            <button type="button" id="add-schedule-btn" class="btn-add">
+                                <span>+</span> Adicionar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="selection-footer" id="selection-footer">
+                    Nenhum horário adicionado
+                </div>
+            </section>
+
+            <!-- Passo 5: Finalização -->
+            <section class="quiz-step" data-step="5">
+                <h1>FINALIZAR</h1>
+                <p class="subtitle">Alguma observação adicional sobre sua rotina?</p>
+                <textarea id="observations" rows="5" placeholder="Digite aqui..."></textarea>
+            </section>
+
+            <div class="nav-buttons">
+                <button type="button" id="prev-btn" class="btn-outline" style="display:none">Voltar</button>
+                <button type="button" id="next-btn" class="btn-primary">Continuar</button>
+                <button type="submit" id="submit-btn" class="btn-primary" style="display:none">Enviar Pesquisa</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="success-modal" class="success-modal">
+        <div class="modal-inner">
+            <h2 style="color:var(--brand-red); margin-bottom:15px;">DADOS ENVIADOS!</h2>
+            <p>Obrigado por ajudar a construir a Grade Inteligente do Coliseu.</p>
+            <button onclick="window.location.reload()" class="btn-primary" style="margin-top:20px;">Fechar</button>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
