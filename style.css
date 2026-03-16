@@ -36,14 +36,15 @@ header {
 }
 
 .logo-coliseu {
-    font-family: 'Outfit', sans-serif;
-    font-weight: 800;
-    font-size: 32px;
-    letter-spacing: 2px;
-    color: white;
-    -webkit-text-stroke: 1px var(--brand-red);
-    text-transform: uppercase;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+}
+
+.logo-coliseu img {
+    height: 45px;
+    width: auto;
+    filter: drop-shadow(0 0 10px var(--brand-red-glow));
 }
 
 .progress-container {
