@@ -42,9 +42,10 @@ header {
 }
 
 .logo-coliseu img {
-    height: 120px;
+    height: 65px;
     width: auto;
-    filter: drop-shadow(0 0 15px var(--brand-red-glow));
+    max-width: 100%;
+    filter: drop-shadow(0 0 12px var(--brand-red-glow));
 }
 
 .progress-container {
