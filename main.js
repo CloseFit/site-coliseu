@@ -375,13 +375,23 @@ window.removeSchedule = (index) => {
  * WhatsApp Mask
  */
 function applyWhatsAppMask(e) {
-    let v = e.target.value.replace(/\D/g, '').slice(0, 11);
-    if (v.length <= 10) {
-        v = v.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+    let v = e.target.value.replace(/\D/g, '');
+    
+    // Limita a 11 dígitos
+    if (v.length > 11) v = v.slice(0, 11);
+    
+    if (v.length === 0) {
+        e.target.value = v;
+    } else if (v.length <= 2) {
+        e.target.value = '(' + v;
+    } else if (v.length <= 6) {
+        e.target.value = '(' + v.slice(0, 2) + ') ' + v.slice(2);
+    } else if (v.length <= 10) {
+        e.target.value = '(' + v.slice(0, 2) + ') ' + v.slice(2, 6) + '-' + v.slice(6);
     } else {
-        v = v.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+        e.target.value = '(' + v.slice(0, 2) + ') ' + v.slice(2, 7) + '-' + v.slice(7);
     }
-    e.target.value = v;
+    
     validateFieldInline(e.target);
 }
 
