@@ -1,6 +1,6 @@
 // Configuration & Constants
 const CONFIG = {
-    TOTAL_STEPS: 5,
+    TOTAL_STEPS: 6,
     HOURS: ['05h', '06h', '07h', '08h', '09h', '10h', '11h', '12h', '16h', '17h', '18h', '19h', '20h', '21h'],
     SUPABASE_URL: 'https://gzvflbsjksmriqfaiizr.supabase.co',
     SUPABASE_KEY: 'sb_publishable_RReaq3MLFL3G8_6Q5sqlMw_j80yV-lj',
@@ -90,6 +90,19 @@ function setupEventListeners() {
         UI.form.addEventListener('change', saveDraft);
         UI.form.addEventListener('input', saveDraft);
     }
+
+    // Condicional: mostra campo de detalhe quando "Sim" é selecionado
+    UI.form.addEventListener('change', (e) => {
+        if (e.target.name === 'other_sport') {
+            const field = document.getElementById('other-sport-field');
+            if (field) {
+                const isYes = e.target.value === 'Sim';
+                field.classList.toggle('visible', isYes);
+                const detail = document.getElementById('other_sport_detail');
+                if (!isYes && detail) detail.value = '';
+            }
+        }
+    });
 }
 
 function handleAddSchedule() {
@@ -288,12 +301,15 @@ async function handleSubmit(e) {
     e.preventDefault();
     if (state.isSubmitting) return;
 
+    const otherSportRadio = UI.form.other_sport;
     const formData = {
         student_name: document.getElementById('name').value,
         student_whatsapp: document.getElementById('whatsapp').value,
         student_type: UI.form.plan_type.value,
         weekly_frequency: UI.form.frequency.value,
         schedule_selection: state.selections,
+        other_sport: otherSportRadio ? otherSportRadio.value : null,
+        other_sport_detail: document.getElementById('other_sport_detail')?.value || null,
         observations: UI.observations.value
     };
 

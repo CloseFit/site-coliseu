@@ -97,6 +97,19 @@ h1 {
     margin-bottom: 30px;
 }
 
+/* Conditional field (reveal on Sim) */
+.conditional-field {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+.conditional-field.visible {
+    max-height: 200px;
+    opacity: 1;
+}
+
 .quiz-step {
     display: none;
     animation: fadeIn 0.3s ease;
