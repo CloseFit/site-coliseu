@@ -206,6 +206,14 @@ function updateUI() {
         step.classList.toggle('active', isActive);
     });
 
+    // Pause video when leaving Step 1
+    const video = document.getElementById('intro-video');
+    if (video && state.currentStep !== 1) {
+        video.pause();
+        const overlay = document.getElementById('video-overlay');
+        if (overlay) overlay.classList.remove('hidden');
+    }
+
     // Progress
     const progress = (state.currentStep / CONFIG.TOTAL_STEPS) * 100;
     if (UI.progressBar) UI.progressBar.style.width = `${progress}%`;
