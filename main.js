@@ -40,6 +40,35 @@ function init() {
     setupEventListeners();
     restoreDraft();   // Auto-Save: restaura dados do localStorage
     updateUI();
+
+    // Iniciar vídeo se existir (muted por padrão para autoplay, mas agora usaremos o overlay)
+    const video = document.getElementById('intro-video');
+    if (video) {
+        // Garantimos que o vídeo comece pausado para o overlay aparecer
+        video.pause();
+    }
+}
+
+/**
+ * Lógica Customizada de Vídeo
+ */
+function handleVideoPlay() {
+    const video = document.getElementById('intro-video');
+    const overlay = document.getElementById('video-overlay');
+    
+    if (video && overlay) {
+        video.muted = false; // Ativa o áudio agora que houve interação
+        video.play();
+        overlay.classList.add('hidden');
+        
+        // Inicia o timer para mostrar o botão Continuar (15 segundos)
+        setTimeout(() => {
+            if (state.currentStep === 1) {
+                UI.nextBtn.classList.remove('hidden-delayed');
+                UI.nextBtn.classList.add('show-delayed');
+            }
+        }, 15000); // 15s
+    }
 }
 
 function setupTimeSelector() {
@@ -166,6 +195,14 @@ function updateUI() {
     } else {
         UI.nextBtn.style.display = 'block';
         UI.submitBtn.style.display = 'none';
+        
+        // Lógica de Delay no Passo 1 (Vídeo)
+        if (state.currentStep === 1) {
+            UI.nextBtn.classList.add('hidden-delayed');
+            UI.nextBtn.classList.remove('show-delayed');
+        } else {
+            UI.nextBtn.classList.remove('hidden-delayed', 'show-delayed');
+        }
     }
 }
 
