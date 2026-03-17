@@ -32,12 +32,27 @@
             <div class="progress-container">
                 <div class="progress-bar" id="progress-bar"></div>
             </div>
-            <p class="step-indicator" id="step-indicator">Passo 1 de 6</p>
+            <p class="step-indicator" id="step-indicator">Passo 1 de 7</p>
         </header>
 
         <form id="quiz-form">
             <!-- Passo 1: Identidade -->
+            <!-- Passo 1: Vídeo de Boas-vindas -->
             <section class="quiz-step active" data-step="1">
+                <h1>BEM-VINDO</h1>
+                <p class="subtitle">Veja o vídeo explicativo para saber como nos ajudar a construir a grade perfeita.</p>
+                <div class="video-container">
+                    <iframe 
+                        src="https://www.youtube.com/embed/7UfP2|nAaHnw" 
+                        title="Vídeo Explicativo Coliseu" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </section>
+
+            <section class="quiz-step" data-step="2">
                 <h1>IDENTIDADE</h1>
                 <p class="subtitle">Como podemos te identificar?</p>
                 <div class="input-group">
@@ -51,7 +66,7 @@
             </section>
 
             <!-- Passo 2: Tipo de Plano -->
-            <section class="quiz-step" data-step="2">
+            <section class="quiz-step" data-step="3">
                 <h1>TIPO DE PLANO</h1>
                 <p class="subtitle">Como você costuma acessar o Coliseu?</p>
                 <div class="radio-group row">
@@ -70,7 +85,7 @@
             </section>
 
             <!-- Passo 3: Frequência -->
-            <section class="quiz-step" data-step="3">
+            <section class="quiz-step" data-step="4">
                 <h1>FREQUÊNCIA</h1>
                 <p class="subtitle">Quantas vezes na semana você pretende treinar?</p>
                 <div class="radio-group row">
@@ -98,7 +113,7 @@
             </section>
 
             <!-- Passo 4: Grade de Horários (Modelo 1: Fila de Preferência) -->
-            <section class="quiz-step" data-step="4">
+            <section class="quiz-step" data-step="5">
                 <h1>SUA GRADE IDEAL</h1>
                 <p class="subtitle">Adicione os dias e horários que você pretende treinar.</p>
                 
@@ -135,7 +150,7 @@
             </section>
 
             <!-- Passo 5: Outras Modalidades -->
-            <section class="quiz-step" data-step="5">
+            <section class="quiz-step" data-step="6">
                 <h1>OUTRAS MODALIDADES</h1>
                 <p class="subtitle">Você pratica alguma outra modalidade ou esporte fora do Coliseu?</p>
                 <div class="radio-group row">
@@ -159,7 +174,7 @@
             </section>
 
             <!-- Passo 6: Finalização -->
-            <section class="quiz-step" data-step="6">
+            <section class="quiz-step" data-step="7">
                 <h1>CONFIRMAR</h1>
                 <p class="subtitle">Revise seus dados antes de enviar.</p>
 

@@ -1,6 +1,6 @@
 // Configuration & Constants
 const CONFIG = {
-    TOTAL_STEPS: 6,
+    TOTAL_STEPS: 7,
     HOURS: ['05h', '06h', '07h', '08h', '09h', '10h', '11h', '12h', '16h', '17h', '18h', '19h', '20h', '21h'],
     SUPABASE_URL: 'https://gzvflbsjksmriqfaiizr.supabase.co',
     SUPABASE_KEY: 'sb_publishable_RReaq3MLFL3G8_6Q5sqlMw_j80yV-lj',
