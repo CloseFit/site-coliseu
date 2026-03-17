@@ -21,6 +21,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;800&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -183,7 +184,12 @@
         <div class="modal-inner">
             <h2 style="color:var(--brand-red); margin-bottom:15px;">DADOS ENVIADOS!</h2>
             <p>Obrigado por ajudar a construir a Grade Inteligente do Coliseu.</p>
-            <button onclick="window.location.reload()" class="btn-primary" style="margin-top:20px;">Fechar</button>
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 25px;">
+                <button id="whatsapp-redirect-btn" class="btn-primary" style="background-color: #25D366; border-color: #25D366;">
+                    Falar com o Coliseu no WhatsApp
+                </button>
+                <button onclick="window.location.reload()" class="btn-outline">Fechar</button>
+            </div>
         </div>
     </div>
 
