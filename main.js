@@ -194,7 +194,7 @@ function validateStep(step) {
     }
 
     // Validação específica do WhatsApp: mínimo 10 dígitos (DDD + número)
-    if (step === 1) {
+    if (step === 2) {
         const whatsappInput = document.getElementById('whatsapp');
         if (whatsappInput) {
             const digits = whatsappInput.value.replace(/\D/g, '');
@@ -208,7 +208,7 @@ function validateStep(step) {
         }
     }
 
-    if (step === 4 && state.selections.length === 0) {
+    if (step === 5 && state.selections.length === 0) {
         return confirm('Você não selecionou nenhum horário. Deseja continuar assim mesmo?');
     }
 
