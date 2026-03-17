@@ -136,6 +136,12 @@ function navigate(direction) {
     
     state.currentStep += direction;
     updateUI();
+
+    // Renderiza resumo ao entrar no último passo
+    if (state.currentStep === CONFIG.TOTAL_STEPS) {
+        renderReviewCard();
+    }
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -187,6 +193,21 @@ function validateStep(step) {
         }
     }
 
+    // Validação específica do WhatsApp: mínimo 10 dígitos (DDD + número)
+    if (step === 1) {
+        const whatsappInput = document.getElementById('whatsapp');
+        if (whatsappInput) {
+            const digits = whatsappInput.value.replace(/\D/g, '');
+            if (digits.length < 10) {
+                whatsappInput.focus();
+                whatsappInput.classList.add('field-error');
+                whatsappInput.classList.remove('field-ok');
+                showToast('WhatsApp inválido. Informe DDD + número completo.', 'error');
+                return false;
+            }
+        }
+    }
+
     if (step === 4 && state.selections.length === 0) {
         return confirm('Você não selecionou nenhum horário. Deseja continuar assim mesmo?');
     }
@@ -224,6 +245,54 @@ function renderList() {
 function getDayFull(short) {
     const days = { 'SEG': 'Segunda', 'TER': 'Terça', 'QUA': 'Quarta', 'QUI': 'Quinta', 'SEX': 'Sexta', 'SAB': 'Sábado' };
     return days[short] || short;
+}
+
+/**
+ * Review Card
+ */
+function renderReviewCard() {
+    const card = document.getElementById('review-card');
+    if (!card) return;
+
+    const name    = document.getElementById('name')?.value || '—';
+    const phone   = document.getElementById('whatsapp')?.value || '—';
+    const plan    = UI.form.plan_type?.value || '—';
+    const freq    = UI.form.frequency?.value || '—';
+    const sport   = UI.form.other_sport?.value || '—';
+    const detail  = document.getElementById('other_sport_detail')?.value;
+
+    const scheduleHTML = state.selections.length
+        ? state.selections.map(s =>
+            `<span class="review-tag">${getDayFull(s.day)} às ${s.time}</span>`
+          ).join('')
+        : '<span class="review-empty">Nenhum horário selecionado</span>';
+
+    card.innerHTML = `
+        <div class="review-row">
+            <span class="review-label">Nome</span>
+            <span class="review-value">${name}</span>
+        </div>
+        <div class="review-row">
+            <span class="review-label">WhatsApp</span>
+            <span class="review-value">${phone}</span>
+        </div>
+        <div class="review-row">
+            <span class="review-label">Plano</span>
+            <span class="review-value">${plan}</span>
+        </div>
+        <div class="review-row">
+            <span class="review-label">Frequência</span>
+            <span class="review-value">${freq} por semana</span>
+        </div>
+        <div class="review-row">
+            <span class="review-label">Horários</span>
+            <div class="review-tags">${scheduleHTML}</div>
+        </div>
+        <div class="review-row">
+            <span class="review-label">Outro esporte</span>
+            <span class="review-value">${sport}${detail ? ' — ' + detail : ''}</span>
+        </div>
+    `;
 }
 
 window.removeSchedule = (index) => {

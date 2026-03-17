@@ -4,6 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scanner Coliseu | Grade Inteligente</title>
+
+    <!-- SEO & Social Preview -->
+    <meta name="description" content="Ajude o Coliseu a montar a Grade Inteligente. Responda em menos de 2 minutos e garanta seu lugar nos melhores horários.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="🏋️ Coliseu | Pesquisa de Grade Inteligente">
+    <meta property="og:description" content="Diga quais dias e horários você quer treinar. Juntos vamos montar a grade perfeita!">
+    <meta property="og:image" content="https://gzvflbsjksmriqfaiizr.supabase.co/storage/v1/object/public/assets/og-coliseu.png">
+    <meta property="og:locale" content="pt_BR">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="🏋️ Coliseu | Pesquisa de Grade Inteligente">
+    <meta name="twitter:description" content="Diga quais dias e horários você quer treinar. Juntos vamos montar a grade perfeita!">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;800&family=Inter:wght@400;700&display=swap" rel="stylesheet">
@@ -147,9 +159,16 @@
 
             <!-- Passo 6: Finalização -->
             <section class="quiz-step" data-step="6">
-                <h1>FINALIZAR</h1>
-                <p class="subtitle">Alguma observação adicional sobre sua rotina?</p>
-                <textarea id="observations" rows="5" placeholder="Digite aqui..."></textarea>
+                <h1>CONFIRMAR</h1>
+                <p class="subtitle">Revise seus dados antes de enviar.</p>
+
+                <!-- Review Card: preenchido pelo JS -->
+                <div class="review-card" id="review-card"></div>
+
+                <div class="input-group" style="margin-top: 24px;">
+                    <label>Observações adicionais (opcional)</label>
+                    <textarea id="observations" rows="3" placeholder="Alguma informação extra sobre sua rotina..."></textarea>
+                </div>
             </section>
 
             <div class="nav-buttons">
