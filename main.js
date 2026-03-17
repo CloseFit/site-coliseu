@@ -11,7 +11,8 @@ const CONFIG = {
 const state = {
     currentStep: 1,
     selections: [],
-    isSubmitting: false
+    isSubmitting: false,
+    videoTimerStarted: false
 };
 
 // DOM Cache
@@ -57,18 +58,40 @@ function handleVideoPlay() {
     const overlay = document.getElementById('video-overlay');
     
     if (video && overlay) {
-        video.muted = false; // Ativa o áudio agora que houve interação
+        video.muted = false; 
         video.play();
         overlay.classList.add('hidden');
         
-        // Inicia o timer para mostrar o botão Continuar (15 segundos)
-        setTimeout(() => {
-            if (state.currentStep === 1) {
-                UI.nextBtn.classList.remove('hidden-delayed');
-                UI.nextBtn.classList.add('show-delayed');
-            }
-        }, 15000); // 15s
+        startVideoDelayTimer();
     }
+}
+
+function toggleVideo() {
+    const video = document.getElementById('intro-video');
+    const overlay = document.getElementById('video-overlay');
+    
+    if (video && overlay) {
+        if (video.paused) {
+            video.play();
+            overlay.classList.add('hidden');
+            startVideoDelayTimer();
+        } else {
+            video.pause();
+            overlay.classList.remove('hidden');
+        }
+    }
+}
+
+function startVideoDelayTimer() {
+    if (state.videoTimerStarted) return;
+    
+    state.videoTimerStarted = true;
+    setTimeout(() => {
+        if (state.currentStep === 1) {
+            UI.nextBtn.classList.remove('hidden-delayed');
+            UI.nextBtn.classList.add('show-delayed');
+        }
+    }, 15000); // 15s
 }
 
 function setupTimeSelector() {
