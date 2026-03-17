@@ -122,12 +122,13 @@ h1 {
 /* Video Step */
 .video-container {
     width: 100%;
-    aspect-ratio: 16/9;
+    max-width: 320px; /* Largura ideal para shorts vertical */
+    margin: 0 auto 30px auto;
+    aspect-ratio: 9/16;
     background: rgba(0,0,0,0.4);
     border: 1px solid var(--glass-border);
-    border-radius: 16px;
+    border-radius: 20px;
     overflow: hidden;
-    margin-bottom: 30px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.3), 0 0 20px rgba(227, 27, 35, 0.05);
 }
 
