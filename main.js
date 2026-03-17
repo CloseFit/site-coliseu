@@ -12,7 +12,8 @@ const state = {
     currentStep: 1,
     selections: [],
     isSubmitting: false,
-    videoTimerStarted: false
+    videoTimerStarted: false,
+    videoDelayPassed: false
 };
 
 // DOM Cache
@@ -87,11 +88,12 @@ function startVideoDelayTimer() {
     
     state.videoTimerStarted = true;
     setTimeout(() => {
+        state.videoDelayPassed = true;
         if (state.currentStep === 1) {
             UI.nextBtn.classList.remove('hidden-delayed');
             UI.nextBtn.classList.add('show-delayed');
         }
-    }, 15000); // 15s
+    }, 30000); // 30s
 }
 
 function setupTimeSelector() {
@@ -220,7 +222,7 @@ function updateUI() {
         UI.submitBtn.style.display = 'none';
         
         // Lógica de Delay no Passo 1 (Vídeo)
-        if (state.currentStep === 1) {
+        if (state.currentStep === 1 && !state.videoDelayPassed) {
             UI.nextBtn.classList.add('hidden-delayed');
             UI.nextBtn.classList.remove('show-delayed');
         } else {
