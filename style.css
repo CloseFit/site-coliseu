@@ -147,6 +147,24 @@ input:focus, textarea:focus {
     color: #444;
 }
 
+/* Real-time Validation States */
+input.field-ok {
+    border-color: rgba(46, 213, 115, 0.6);
+    box-shadow: 0 0 10px rgba(46, 213, 115, 0.1);
+}
+
+input.field-error {
+    border-color: rgba(227, 27, 35, 0.7);
+    box-shadow: 0 0 10px rgba(227, 27, 35, 0.15);
+    animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%       { transform: translateX(-6px); }
+    60%       { transform: translateX(6px); }
+}
+
 .radio-group.row {
     display: flex;
     gap: 12px;

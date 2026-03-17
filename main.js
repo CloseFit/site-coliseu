@@ -3,7 +3,8 @@ const CONFIG = {
     TOTAL_STEPS: 5,
     HOURS: ['05h', '06h', '07h', '08h', '09h', '10h', '11h', '12h', '16h', '17h', '18h', '19h', '20h', '21h'],
     SUPABASE_URL: 'https://gzvflbsjksmriqfaiizr.supabase.co',
-    SUPABASE_KEY: 'sb_publishable_RReaq3MLFL3G8_6Q5sqlMw_j80yV-lj'
+    SUPABASE_KEY: 'sb_publishable_RReaq3MLFL3G8_6Q5sqlMw_j80yV-lj',
+    STORAGE_KEY: 'coliseu_quiz_draft'
 };
 
 // Application State
@@ -37,6 +38,7 @@ const UI = {
 function init() {
     setupTimeSelector();
     setupEventListeners();
+    restoreDraft();   // Auto-Save: restaura dados do localStorage
     updateUI();
 }
 
@@ -66,6 +68,28 @@ function setupEventListeners() {
     if (UI.form) {
         UI.form.onsubmit = handleSubmit;
     }
+
+    // WhatsApp Mask
+    const whatsappInput = document.getElementById('whatsapp');
+    if (whatsappInput) {
+        whatsappInput.addEventListener('input', applyWhatsAppMask);
+        whatsappInput.addEventListener('blur', () => validateFieldInline(whatsappInput));
+    }
+
+    // Real-time validation on Name
+    const nameInput = document.getElementById('name');
+    if (nameInput) {
+        nameInput.addEventListener('blur', () => validateFieldInline(nameInput));
+        nameInput.addEventListener('input', () => {
+            if (nameInput.classList.contains('field-error')) validateFieldInline(nameInput);
+        });
+    }
+
+    // Auto-Save: persiste dados a cada mudança no formulário
+    if (UI.form) {
+        UI.form.addEventListener('change', saveDraft);
+        UI.form.addEventListener('input', saveDraft);
+    }
 }
 
 function handleAddSchedule() {
@@ -85,6 +109,7 @@ function handleAddSchedule() {
 
     state.selections.push({ day, time });
     renderList();
+    saveDraft();
     
     UI.daySelector.selectedIndex = 0;
     UI.timeSelector.selectedIndex = 0;
@@ -191,7 +216,70 @@ function getDayFull(short) {
 window.removeSchedule = (index) => {
     state.selections.splice(index, 1);
     renderList();
+    saveDraft();
 };
+
+/**
+ * WhatsApp Mask
+ */
+function applyWhatsAppMask(e) {
+    let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+    if (v.length <= 10) {
+        v = v.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+    } else {
+        v = v.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+    }
+    e.target.value = v;
+    validateFieldInline(e.target);
+}
+
+/**
+ * Real-time Inline Validation
+ */
+function validateFieldInline(input) {
+    const isValid = input.value.trim().length > 0;
+    input.classList.toggle('field-error', !isValid);
+    input.classList.toggle('field-ok', isValid);
+}
+
+/**
+ * Auto-Save (localStorage)
+ */
+function saveDraft() {
+    try {
+        const draft = {
+            name: document.getElementById('name')?.value || '',
+            whatsapp: document.getElementById('whatsapp')?.value || '',
+            selections: state.selections
+        };
+        localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(draft));
+    } catch (_) { /* Silencia erros de storage (ex: modo privado restrito) */ }
+}
+
+function restoreDraft() {
+    try {
+        const raw = localStorage.getItem(CONFIG.STORAGE_KEY);
+        if (!raw) return;
+
+        const draft = JSON.parse(raw);
+
+        const nameInput = document.getElementById('name');
+        const whatsappInput = document.getElementById('whatsapp');
+
+        if (draft.name && nameInput) {
+            nameInput.value = draft.name;
+            validateFieldInline(nameInput);
+        }
+        if (draft.whatsapp && whatsappInput) {
+            whatsappInput.value = draft.whatsapp;
+            validateFieldInline(whatsappInput);
+        }
+        if (Array.isArray(draft.selections) && draft.selections.length > 0) {
+            state.selections = draft.selections;
+            renderList();
+        }
+    } catch (_) { /* Dados corrompidos: ignora silenciosamente */ }
+}
 
 /**
  * Form Submission
@@ -221,6 +309,8 @@ async function handleSubmit(e) {
 
         if (error) throw error;
 
+        // Limpa o rascunho salvo após envio bem-sucedido
+        localStorage.removeItem(CONFIG.STORAGE_KEY);
         UI.successModal.style.display = 'flex';
     } catch (err) {
         showToast('Erro ao enviar: ' + err.message, 'error');
