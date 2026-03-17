@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scanner Coliseu | Grade Inteligente</title>
+    <title>Clube Coliseu | Pesquisa de Grade Personalizada</title>
 
     <!-- SEO & Social Preview -->
     <meta name="description" content="Ajude o Coliseu a montar a Grade Inteligente. Responda em menos de 2 minutos e garanta seu lugar nos melhores horários.">
@@ -36,11 +36,10 @@
         </header>
 
         <form id="quiz-form">
-            <!-- Passo 1: Identidade -->
             <!-- Passo 1: Vídeo de Boas-vindas -->
             <section class="quiz-step active" data-step="1">
-                <h1>BEM-VINDO</h1>
-                <p class="subtitle">Veja o vídeo explicativo para saber como nos ajudar a construir a grade perfeita.</p>
+                <h1>BEM-VINDO AO CLUBE COLISEU</h1>
+                <p class="subtitle">Assista ao vídeo do Coach Tawan para entender nossa nova proposta de acompanhamento.</p>
                 <div class="video-container">
                     <video 
                         id="intro-video"
@@ -66,8 +65,8 @@
             </section>
 
             <section class="quiz-step" data-step="2">
-                <h1>IDENTIDADE</h1>
-                <p class="subtitle">Como podemos te identificar?</p>
+                <h1>IDENTIFICAÇÃO</h1>
+                <p class="subtitle">Nesta nova fase, queremos estar mais próximos do seu resultado.</p>
                 <div class="input-group">
                     <label>Nome Completo</label>
                     <input type="text" id="name" placeholder="Digite seu nome..." required>
@@ -80,8 +79,8 @@
 
             <!-- Passo 2: Tipo de Plano -->
             <section class="quiz-step" data-step="3">
-                <h1>TIPO DE PLANO</h1>
-                <p class="subtitle">Como você costuma acessar o Coliseu?</p>
+                <h1>SUA JORNADA</h1>
+                <p class="subtitle">Como você faz parte da nossa comunidade hoje?</p>
                 <div class="radio-group row">
                     <label class="radio-item big">
                         <input type="radio" name="plan_type" value="Normal" required>
@@ -99,7 +98,7 @@
 
             <!-- Passo 3: Frequência -->
             <section class="quiz-step" data-step="4">
-                <h1>FREQUÊNCIA</h1>
+                <h1>FREQUÊNCIA DE TREINO</h1>
                 <p class="subtitle">Quantas vezes na semana você pretende treinar?</p>
                 <div class="radio-group row">
                     <label class="radio-item chip">
@@ -125,10 +124,10 @@
                 </div>
             </section>
 
-            <!-- Passo 4: Grade de Horários (Modelo 1: Fila de Preferência) -->
+            <!-- Passo 4: Grade de Horários -->
             <section class="quiz-step" data-step="5">
-                <h1>SUA GRADE IDEAL</h1>
-                <p class="subtitle">Adicione os dias e horários que você pretende treinar.</p>
+                <h1>PERSONALIZAÇÃO DA GRADE</h1>
+                <p class="subtitle">A base do nosso acompanhamento é a organização da sua rotina.</p>
                 
                 <div class="preference-list-container">
                     <div id="preference-list" class="preference-list">
@@ -164,7 +163,7 @@
 
             <!-- Passo 5: Outras Modalidades -->
             <section class="quiz-step" data-step="6">
-                <h1>OUTRAS MODALIDADES</h1>
+                <h1>COMPLEMENTO DE ROTINA</h1>
                 <p class="subtitle">Você pratica alguma outra modalidade ou esporte fora do Coliseu?</p>
                 <div class="radio-group row">
                     <label class="radio-item big">
@@ -188,8 +187,8 @@
 
             <!-- Passo 6: Finalização -->
             <section class="quiz-step" data-step="7">
-                <h1>CONFIRMAR</h1>
-                <p class="subtitle">Revise seus dados antes de enviar.</p>
+                <h1>REVISÃO FINAL</h1>
+                <p class="subtitle">Confirme suas informações para iniciarmos este novo ciclo de acompanhamento.</p>
 
                 <!-- Review Card: preenchido pelo JS -->
                 <div class="review-card" id="review-card"></div>
@@ -210,8 +209,8 @@
 
     <div id="success-modal" class="success-modal">
         <div class="modal-inner">
-            <h2 style="color:var(--brand-red); margin-bottom:15px;">DADOS ENVIADOS!</h2>
-            <p>Obrigado por ajudar a construir a Grade Inteligente do Coliseu.</p>
+            <h2 style="color:var(--brand-red); margin-bottom:15px;">BEM-VINDO AO CLUBE!</h2>
+            <p>Sua jornada personalizada no Coliseu começa agora.</p>
             <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 25px;">
                 <button id="whatsapp-redirect-btn" class="btn-primary" style="background-color: #25D366; border-color: #25D366;">
                     Falar com o Coliseu no WhatsApp
