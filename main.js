@@ -4,7 +4,9 @@ const CONFIG = {
     HOURS: ['05h', '06h', '07h', '08h', '09h', '10h', '11h', '12h', '16h', '17h', '18h', '19h', '20h', '21h'],
     SUPABASE_URL: 'https://gzvflbsjksmriqfaiizr.supabase.co',
     SUPABASE_KEY: 'sb_publishable_RReaq3MLFL3G8_6Q5sqlMw_j80yV-lj',
-    STORAGE_KEY: 'coliseu_quiz_draft'
+    STORAGE_KEY: 'coliseu_quiz_draft',
+    WHATSAPP_OFFICIAL: '5573999911525',
+    VIDEO_DELAY: 30000 // 30s
 };
 
 // Application State
@@ -93,7 +95,7 @@ function startVideoDelayTimer() {
             UI.nextBtn.classList.remove('hidden-delayed');
             UI.nextBtn.classList.add('show-delayed');
         }
-    }, 30000); // 30s
+    }, CONFIG.VIDEO_DELAY);
 }
 
 function setupTimeSelector() {
@@ -260,6 +262,20 @@ function validateStep(step) {
             input.focus();
             showToast('Por favor, preencha este campo.', 'warning');
             return false;
+        }
+    }
+
+    // Validação de Nome: Mínimo 2 palavras
+    if (step === 2) {
+        const nameInput = document.getElementById('name');
+        if (nameInput) {
+            const words = nameInput.value.trim().split(/\s+/);
+            if (words.length < 2) {
+                nameInput.focus();
+                nameInput.classList.add('field-error');
+                showToast('Por favor, informe seu nome completo.', 'warning');
+                return false;
+            }
         }
     }
 
@@ -514,12 +530,12 @@ function setupWhatsAppRedirect(data) {
     const btn = document.getElementById('whatsapp-redirect-btn');
     if (!btn) return;
 
-    const phone = '5573999911525'; // Número oficial do Coliseu
+    const phone = CONFIG.WHATSAPP_OFFICIAL;
     
     const text = `Olá Coliseu! Acabei de preencher minha pesquisa de grade inteligente.`;
 
     btn.onclick = () => {
-        const url = `https://wa.me/${phone}?text=${text}`;
+        const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
         window.open(url, '_blank');
     };
 }
