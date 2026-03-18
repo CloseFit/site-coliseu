@@ -19,6 +19,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;800&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -75,6 +76,10 @@
                 <div class="input-group">
                     <label>WhatsApp</label>
                     <input type="tel" id="whatsapp" placeholder="(00) 00000-0000" required>
+                </div>
+                <div class="privacy-badge">
+                    <i class="fas fa-shield-alt"></i>
+                    Seus dados estão protegidos e serão usados apenas para a sua grade.
                 </div>
             </section>
 
@@ -227,13 +232,14 @@
 
     <div id="success-modal" class="success-modal">
         <div class="modal-inner">
-            <h2 style="color:var(--brand-red); margin-bottom:15px;">BEM-VINDO AO CLUBE!</h2>
-            <p>Sua jornada personalizada no Coliseu começa agora.</p>
-            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 25px;">
-                <button id="whatsapp-redirect-btn" class="btn-primary" style="background-color: #25D366; border-color: #25D366;">
-                    Falar com o Coliseu no WhatsApp
+            <div style="font-size: 50px; margin-bottom: 20px;">🏆</div>
+            <h2 style="color:var(--brand-red); margin-bottom:15px; font-family:'Outfit'; font-weight:800;">BEM-VINDO AO CLUBE!</h2>
+            <p style="color: #aaa; line-height: 1.6;">Sua jornada personalizada no Coliseu começa agora. Nossa equipe entrará em contato em breve.</p>
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 30px;">
+                <button id="whatsapp-redirect-btn" class="btn-primary" style="background-color: #25D366; border-color: #25D366; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);">
+                    <i class="fab fa-whatsapp" style="margin-right: 8px;"></i> Falar com o Coliseu agora
                 </button>
-                <button onclick="window.location.reload()" class="btn-outline">Fechar</button>
+                <button onclick="window.location.reload()" class="btn-outline" style="border-color: rgba(255,255,255,0.1);">Fechar</button>
             </div>
         </div>
     </div>
