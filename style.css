@@ -414,11 +414,72 @@ input.field-error {
     color: var(--brand-red);
 }
 
-.add-schedule-control {
-    background: #111;
+.schedule-guide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 25px;
+    background: rgba(255, 255, 255, 0.03);
     padding: 15px;
-    border-radius: 8px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.guide-item {
+    font-size: 12px;
+    font-weight: 700;
+    color: #888;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.guide-item span {
+    background: var(--brand-red);
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+}
+
+.arrow {
+    color: #333;
+    font-weight: bold;
+}
+
+.selection-footer {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-size: 14px;
+    border-top: 1px solid #222;
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+.selection-footer i {
+    margin-right: 8px;
+    opacity: 0.5;
+}
+
+.add-schedule-control {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    border-radius: 12px;
     border: 1px dashed #333;
+    transition: var(--transition);
+}
+
+.add-schedule-control:focus-within {
+    border-color: var(--brand-red);
+    background: rgba(227, 27, 35, 0.05);
 }
 
 .selector-row {
