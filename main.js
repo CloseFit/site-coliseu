@@ -342,7 +342,8 @@ function renderReviewCard() {
 
     const name    = document.getElementById('name')?.value || '—';
     const phone   = document.getElementById('whatsapp')?.value || '—';
-    const plan    = UI.form.plan_type?.value || '—';
+    const planRaw = UI.form.plan_type?.value;
+    const plan    = planRaw === 'Inativo' ? 'Não estou treinando' : (planRaw || '—');
     const freq    = UI.form.frequency?.value || '—';
     const sport   = UI.form.other_sport?.value || '—';
     const detail  = document.getElementById('other_sport_detail')?.value;

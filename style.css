@@ -592,6 +592,11 @@ input.field-error {
         font-size: 16px !important;
         font-weight: 800 !important;
     }
+
+    /* Empilha os planos no mobile para caber os 3 itens com conforto */
+    .radio-group.row:has(.radio-item.big) {
+        flex-direction: column;
+    }
 }
 
 .selection-footer {
