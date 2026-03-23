@@ -2,7 +2,6 @@
   "rewrites": [
     { "source": "/av-fisica", "destination": "/av-fisica/index.html" },
     { "source": "/av-fisica/(.*)", "destination": "/av-fisica/$1" },
-    { "source": "/((?!av-fisica).*碧)", "destination": "/research-page/$1" },
     { "source": "/(.*)", "destination": "/research-page/$1" }
   ]
 }
