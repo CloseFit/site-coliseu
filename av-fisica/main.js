@@ -1,3 +1,14 @@
+// Video Helper — must be global and defined first
+window.handleVideoPlay = (step) => {
+    const videoId = step === 1 ? 'video-intro-1' : 'video-step-2';
+    const video = document.getElementById(videoId);
+    const overlay = document.getElementById(`overlay-${step}`);
+    if (video && overlay) {
+        video.play().catch(() => {}); // catch user-gesture restriction gracefully
+        overlay.classList.add('hidden');
+    }
+};
+
 // Configuration
 const CONFIG = {
     TOTAL_STEPS: 5,
@@ -201,18 +212,7 @@ function validateStep(step) {
     return true;
 }
 
-/**
- * Video Functions
- */
-window.handleVideoPlay = (step) => {
-    const videoId = step === 1 ? 'video-intro-1' : 'video-step-2';
-    const video = document.getElementById(videoId);
-    const overlay = document.getElementById(`overlay-${step}`);
-    if (video && overlay) {
-        video.play();
-        overlay.classList.add('hidden');
-    }
-};
+
 
 /**
  * Supabase Logic
