@@ -404,31 +404,26 @@ async function handleSubmit(e) {
         const { createClient } = supabase;
         const client = createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_KEY);
 
-        // 1. Transactional check (Simple version for MVP)
-        // In a real app, use a Supabase RPC to avoid race conditions.
-        const { data: existing } = await client
-            .from('clube_coliseu_bookings')
-            .select('*')
-            .eq('date', formData.date)
-            .eq('time', formData.time);
-
-        if (existing && existing.length > 0) {
-            alert('Desculpe, este horário acabou de ser preenchido por outra pessoa. Por favor, escolha outro.');
-            state.isSubmitting = false;
-            UI.submitBtn.innerText = 'Finalizar Agendamento';
-            state.currentStep = 3;
-            updateUI();
-            await fetchBookedSlots();
-            renderSlots();
-            return;
-        }
-
-        // 2. Insert Booking
+        // 1. Insert Booking (The database unique constraint unique_booking_slot handles availability)
         const { error } = await client
             .from('clube_coliseu_bookings')
             .insert([formData]);
 
-        if (error) throw error;
+        if (error) {
+            // Check for Postgres Unique Violation (code 23505)
+            if (error.code === '23505') {
+                alert('Desculpe, este horário acabou de ser preenchido por outra pessoa. Por favor, escolha outro.');
+                state.isSubmitting = false;
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                state.currentStep = 2; // Volta para o passo do calendário
+                updateUI();
+                await fetchBookedSlots();
+                renderSlots();
+                return;
+            }
+            throw error;
+        }
 
         // Confetti!
         confetti({ 

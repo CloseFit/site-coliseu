@@ -23,3 +23,11 @@ Thumbs.db
 *.psd
 *.ai
 Design/
+
+# IDE & Tools
+.vercel/
+.vscode/
+*.log
+
+# Documentação Privada (Local apenas)
+*.md
