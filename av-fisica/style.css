@@ -241,6 +241,22 @@ h1 {
     to { opacity: 1; }
 }
 
+/* Controle de visibilidade do Botão Continuar */
+.btn-primary.hidden-delayed {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-primary.show-delayed {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
+}
+
 /* Form Styles */
 .input-group {
     margin-bottom: 20px;

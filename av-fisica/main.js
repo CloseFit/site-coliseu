@@ -8,6 +8,7 @@ window.toggleVideo = (step) => {
         if (video.paused) {
             video.play().catch(() => {});
             overlay.classList.add('hidden');
+            if (step === 1) startVideoDelayTimer();
         } else {
             video.pause();
             overlay.classList.remove('hidden');
@@ -15,11 +16,25 @@ window.toggleVideo = (step) => {
     }
 };
 
+function startVideoDelayTimer() {
+    if (state.videoTimerStarted) return;
+    
+    state.videoTimerStarted = true;
+    setTimeout(() => {
+        state.videoDelayPassed = true;
+        if (state.currentStep === 1) {
+            UI.nextBtn.classList.remove('hidden-delayed');
+            UI.nextBtn.classList.add('show-delayed');
+        }
+    }, CONFIG.VIDEO_DELAY);
+}
+
 // Configuration
 const CONFIG = {
     TOTAL_STEPS: 5,
     SUPABASE_URL: 'https://gzvflbsjksmriqfaiizr.supabase.co',
     SUPABASE_KEY: 'sb_publishable_RReaq3MLFL3G8_6Q5sqlMw_j80yV-lj',
+    VIDEO_DELAY: 30000,
     SLOT_DURATION: 20, // minutes
     SCHEDULE_RULE: {
         2: { start: '07:00', end: '11:00' }, // Terça
@@ -34,6 +49,8 @@ const state = {
     selectedDate: null,
     selectedTime: null,
     isSubmitting: false,
+    videoTimerStarted: false,
+    videoDelayPassed: false,
     bookedSlots: [] // Fetched from Supabase
 };
 
@@ -193,6 +210,14 @@ function updateUI() {
     } else {
         UI.nextBtn.style.display = 'block';
         UI.submitBtn.style.display = 'none';
+        
+        // 30s Delay Logic for Step 1
+        if (state.currentStep === 1 && !state.videoDelayPassed) {
+            UI.nextBtn.classList.add('hidden-delayed');
+            UI.nextBtn.classList.remove('show-delayed');
+        } else {
+            UI.nextBtn.classList.remove('hidden-delayed', 'show-delayed');
+        }
     }
 
     // Video Control (Pause if not on video step)
