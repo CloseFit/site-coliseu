@@ -177,7 +177,7 @@ function updateUI() {
     }
 
     // Video Control (Pause if not on video step)
-    if (state.currentStep !== 1) document.getElementById('video-step-1')?.pause();
+    if (state.currentStep !== 1) document.getElementById('video-intro-1')?.pause();
     if (state.currentStep !== 4) document.getElementById('video-step-2')?.pause();
 }
 
@@ -205,7 +205,8 @@ function validateStep(step) {
  * Video Functions
  */
 window.handleVideoPlay = (step) => {
-    const video = document.getElementById(`video-step-${step}`);
+    const videoId = step === 1 ? 'video-intro-1' : 'video-step-2';
+    const video = document.getElementById(videoId);
     const overlay = document.getElementById(`overlay-${step}`);
     if (video && overlay) {
         video.play();
@@ -300,4 +301,4 @@ function showToast(message, type = 'info') {
     }, 3000);
 }
 
-init();
+document.addEventListener('DOMContentLoaded', init);
