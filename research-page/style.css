@@ -236,20 +236,30 @@ h1 {
     transform: scale(1.1);
 }
 
-/* Controle de visibilidade do Botão Continuar */
-.btn-primary.hidden-delayed {
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(10px);
-    pointer-events: none;
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+/* Controle de visibilidade/bloqueio do Botão Continuar */
+.locked-delayed {
+    opacity: 0.4 !important;
+    pointer-events: none !important;
+    filter: grayscale(1) !important;
+    transform: translateY(0) !important;
 }
 
-.btn-primary.show-delayed {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: translateY(0) !important;
-    pointer-events: auto !important;
+.video-instruction {
+    text-align: center;
+    color: var(--brand-red);
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    background: rgba(227, 27, 35, 0.05);
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px dashed rgba(227, 27, 35, 0.3);
+    animation: fadeIn 0.5s ease;
+}
+
+.video-instruction.hidden {
+    display: none;
 }
 
 @keyframes fadeIn {

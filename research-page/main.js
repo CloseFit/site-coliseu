@@ -33,7 +33,8 @@ const UI = {
     preferenceList: document.getElementById('preference-list'),
     selectionFooter: document.getElementById('selection-footer'),
     observations: document.getElementById('observations'),
-    successModal: document.getElementById('success-modal')
+    successModal: document.getElementById('success-modal'),
+    videoInstruction: document.getElementById('video-instruction')
 };
 
 /**
@@ -92,8 +93,8 @@ function startVideoDelayTimer() {
     setTimeout(() => {
         state.videoDelayPassed = true;
         if (state.currentStep === 1) {
-            UI.nextBtn.classList.remove('hidden-delayed');
-            UI.nextBtn.classList.add('show-delayed');
+            UI.nextBtn.classList.remove('locked-delayed');
+            if (UI.videoInstruction) UI.videoInstruction.classList.add('hidden');
         }
     }, CONFIG.VIDEO_DELAY);
 }
@@ -235,10 +236,11 @@ function updateUI() {
         
         // Lógica de Delay no Passo 1 (Vídeo)
         if (state.currentStep === 1 && !state.videoDelayPassed) {
-            UI.nextBtn.classList.add('hidden-delayed');
-            UI.nextBtn.classList.remove('show-delayed');
+            UI.nextBtn.classList.add('locked-delayed');
+            if (UI.videoInstruction) UI.videoInstruction.classList.remove('hidden');
         } else {
-            UI.nextBtn.classList.remove('hidden-delayed', 'show-delayed');
+            UI.nextBtn.classList.remove('locked-delayed');
+            if (UI.videoInstruction) UI.videoInstruction.classList.add('hidden');
         }
     }
 }
