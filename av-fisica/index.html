@@ -115,13 +115,56 @@
                 
                 <div class="input-group">
                     <label>Qual seu principal objetivo?</label>
-                    <select id="main_goal" class="custom-select" required>
+                    <select id="main_goal" class="custom-select" required onchange="toggleOtherGoal(this.value)">
                         <option value="" disabled selected>Selecione...</option>
                         <option value="Emagrecimento">Emagrecimento</option>
                         <option value="Hipertrofia">Ganho de Massa (Hipertrofia)</option>
                         <option value="Performance">Performance / Condicionamento</option>
                         <option value="Saude">Saúde / Bem-estar</option>
+                        <option value="Outro">Outro...</option>
                     </select>
+                </div>
+
+                <div class="input-group" id="goal_other_container" style="display: none;">
+                    <label>Qual seu objetivo específico?</label>
+                    <input type="text" id="goal_other" placeholder="Descreva seu objetivo aqui...">
+                </div>
+
+                <div class="input-group">
+                    <label>Qual seu nível de experiência com treinos?</label>
+                    <select id="experience_level" class="custom-select" required>
+                        <option value="" disabled selected>Selecione...</option>
+                        <option value="Iniciante">Iniciante (Nunca treinei / Parado há muito tempo)</option>
+                        <option value="Intermediário">Intermediário (Já treinei, conheço o básico)</option>
+                        <option value="Avançado">Avançado (Treino com constância e técnica)</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Quantas vezes por semana pretende treinar?</label>
+                    <select id="weekly_frequency" class="custom-select" required>
+                        <option value="" disabled selected>Selecione...</option>
+                        <option value="2x">2x por semana</option>
+                        <option value="3x">3x por semana</option>
+                        <option value="4x ou mais">4x ou mais</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Qual seu maior obstáculo hoje?</label>
+                    <select id="main_obstacle" class="custom-select" required>
+                        <option value="" disabled selected>O que te impede de ser constante?</option>
+                        <option value="Falta de tempo">Falta de tempo</option>
+                        <option value="Desmotivação">Desmotivação / Preguiça</option>
+                        <option value="Dores ou Lesões">Dores ou Lesões</option>
+                        <option value="Alimentação">Dificuldade com alimentação</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Pratica outros esportes fora do Coliseu?</label>
+                    <input type="text" id="other_sports" placeholder="Natação, Futebol, Corrida... (Se não, deixe em branco)">
                 </div>
 
                 <div class="input-group">

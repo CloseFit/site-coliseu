@@ -331,24 +331,48 @@ async function fetchBookedSlots() {
     }
 }
 
+// Toggle Other Goal Field
+function toggleOtherGoal(value) {
+    const container = document.getElementById('goal_other_container');
+    const input = document.getElementById('goal_other');
+    if (value === 'Outro') {
+        container.style.display = 'block';
+        input.setAttribute('required', 'true');
+    } else {
+        container.style.display = 'none';
+        input.removeAttribute('required');
+        input.value = '';
+    }
+}
+
+// Handle Form Submission
 async function handleSubmit(e) {
-    e.preventDefault();
+    if (e) e.preventDefault();
     if (state.isSubmitting) return;
 
     const formData = {
         name: document.getElementById('name').value,
-        whatsapp: 'N/A', // Removido conforme solicitação
+        whatsapp: 'N/A', 
         date: state.selectedDate,
         time: state.selectedTime,
-        goal: document.getElementById('main_goal').value,
+        main_goal: document.getElementById('main_goal').value,
+        goal_other: document.getElementById('goal_other').value || '',
+        experience_level: document.getElementById('experience_level').value,
+        weekly_frequency: document.getElementById('weekly_frequency').value,
+        main_obstacle: document.getElementById('main_obstacle').value,
+        other_sports: document.getElementById('other_sports').value || '',
+        health_history: document.getElementById('health_history').value || 'N/A',
         limitations: document.getElementById('limitations').value || 'Nenhuma',
         medications: document.getElementById('medications').value || 'Nenhum',
         risks: Array.from(document.querySelectorAll('input[name="health_risk"]:checked')).map(i => i.value),
-        created_at: new Date()
+        created_at: new Date().toISOString()
     };
 
     state.isSubmitting = true;
-    UI.submitBtn.innerText = 'ENVIANDO...';
+    const btn = UI.submitBtn || document.getElementById('submit-btn');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+    btn.disabled = true;
 
     try {
         const { createClient } = supabase;
