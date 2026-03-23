@@ -31,7 +31,7 @@
             <div class="progress-container">
                 <div class="progress-bar" id="progress-bar"></div>
             </div>
-            <p class="step-indicator" id="step-indicator">Passo 1 de 5</p>
+            <p class="step-indicator" id="step-indicator">Passo 1 de 4</p>
         </header>
 
         <form id="assessment-form">
@@ -49,22 +49,9 @@
                 </div>
             </section>
 
-            <!-- Passo 2: Identificação -->
-            <section class="quiz-step" data-step="2">
-                <h1>IDENTIFICAÇÃO</h1>
-                <p class="subtitle">Confirme seus dados para vincularmos ao seu agendamento.</p>
-                <div class="input-group">
-                    <label>Nome Completo</label>
-                    <input type="text" id="name" placeholder="Digite seu nome..." required>
-                </div>
-                <div class="input-group">
-                    <label>WhatsApp</label>
-                    <input type="tel" id="whatsapp" placeholder="(00) 00000-0000" required>
-                </div>
-            </section>
 
-            <!-- Passo 3: Agendamento -->
-            <section class="quiz-step" data-step="3">
+            <!-- Passo 2: Agendamento -->
+            <section class="quiz-step" data-step="2">
                 <h1>ESCOLHA SEU HORÁRIO</h1>
                 <p class="subtitle">Selecione uma data e um horário disponível para sua avaliação (20 min).</p>
                 
@@ -81,10 +68,26 @@
                 </div>
 
                 <input type="hidden" id="selected-slot" name="selected_slot" required>
+
+                <!-- Modal de Confirmação Embutido -->
+                <div id="confirm-modal" class="confirm-modal">
+                    <div class="confirm-card">
+                        <h3>CONFIRMAR AGENDAMENTO</h3>
+                        <p id="confirm-details">Terça, 24 de Mar às 07:00</p>
+                        <div class="input-group" style="margin-top: 20px; text-align: left;">
+                            <label>Nome e Sobrenome</label>
+                            <input type="text" id="name" placeholder="Como deseja ser chamado?" required>
+                        </div>
+                        <div class="confirm-actions">
+                            <button type="button" class="btn-outline" onclick="closeConfirmModal()">Voltar</button>
+                            <button type="button" class="btn-primary" onclick="confirmAndNext()">Agendar e Continuar</button>
+                        </div>
+                    </div>
+                </div>
             </section>
 
-            <!-- Passo 4: Vídeo Intro Anamnese -->
-            <section class="quiz-step" data-step="4">
+            <!-- Passo 3: Vídeo Intro Anamnese -->
+            <section class="quiz-step" data-step="3">
                 <h1>SUA SAÚDE</h1>
                 <p class="subtitle">Antes de terminar, precisamos entender seu histórico de saúde.</p>
                 <div class="video-container" onclick="toggleVideo(2)">
@@ -97,8 +100,8 @@
                 </div>
             </section>
 
-            <!-- Passo 5: Anamnese -->
-            <section class="quiz-step" data-step="5">
+            <!-- Passo 4: Anamnese -->
+            <section class="quiz-step" data-step="4">
                 <h1>ANAMNESE</h1>
                 <p class="subtitle">Responda com sinceridade para sua segurança e melhor performance.</p>
                 

@@ -31,7 +31,7 @@ function startVideoDelayTimer() {
 
 // Configuration
 const CONFIG = {
-    TOTAL_STEPS: 5,
+    TOTAL_STEPS: 4,
     SUPABASE_URL: 'https://gzvflbsjksmriqfaiizr.supabase.co',
     SUPABASE_KEY: 'sb_publishable_RReaq3MLFL3G8_6Q5sqlMw_j80yV-lj',
     VIDEO_DELAY: 30000,
@@ -178,7 +178,36 @@ function selectSlot(time, element) {
     element.classList.add('selected');
     state.selectedTime = time;
     document.getElementById('selected-slot').value = time;
+
+    // Abrir Modal de Confirmação
+    openConfirmModal(time);
 }
+
+function openConfirmModal(time) {
+    const modal = document.getElementById('confirm-modal');
+    const details = document.getElementById('confirm-details');
+    const dateText = formatDate(new Date(state.selectedDate + 'T00:00:00'));
+    
+    details.innerText = `${dateText} às ${time}`;
+    modal.style.display = 'flex';
+}
+
+window.closeConfirmModal = () => {
+    document.getElementById('confirm-modal').style.display = 'none';
+};
+
+window.confirmAndNext = () => {
+    const nameInput = document.getElementById('name');
+    if (!nameInput.value.trim()) {
+        showToast('Por favor, informe seu nome e sobrenome.', 'warning');
+        nameInput.focus();
+        return;
+    }
+    
+    // Fecha modal e navega
+    closeConfirmModal();
+    navigate(1);
+};
 
 /**
  * Navigation
@@ -207,6 +236,10 @@ function updateUI() {
     if (state.currentStep === CONFIG.TOTAL_STEPS) {
         UI.nextBtn.style.display = 'none';
         UI.submitBtn.style.display = 'block';
+    } else if (state.currentStep === 2) {
+        // No passo de agendamento, a navegação ocorre pelo modal
+        UI.nextBtn.style.display = 'none';
+        UI.submitBtn.style.display = 'none';
     } else {
         UI.nextBtn.style.display = 'block';
         UI.submitBtn.style.display = 'none';
@@ -222,7 +255,7 @@ function updateUI() {
 
     // Video Control (Pause if not on video step)
     if (state.currentStep !== 1) document.getElementById('video-intro-1')?.pause();
-    if (state.currentStep !== 4) document.getElementById('video-step-2')?.pause();
+    if (state.currentStep !== 3) document.getElementById('video-step-2')?.pause();
 }
 
 function validateStep(step) {
@@ -271,7 +304,7 @@ async function handleSubmit(e) {
 
     const formData = {
         name: document.getElementById('name').value,
-        whatsapp: document.getElementById('whatsapp').value,
+        whatsapp: 'N/A', // Removido conforme solicitação
         date: state.selectedDate,
         time: state.selectedTime,
         goal: document.getElementById('main_goal').value,
