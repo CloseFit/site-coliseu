@@ -1,35 +1,54 @@
 // Video Helper — must be global and defined first
-window.toggleVideo = (step) => {
-    const videoId = step === 1 ? 'video-intro-1' : 'video-step-2';
-    const video = document.getElementById(videoId);
-    const overlay = document.getElementById(`overlay-${step}`);
+function toggleVideo(id) {
+    const video = document.getElementById(id === 1 ? 'video-intro-1' : 'video-step-2');
+    const overlay = document.getElementById(`overlay-${id}`);
     
     if (video && overlay) {
         if (video.paused) {
             video.play().catch(() => {});
-            overlay.classList.add('hidden');
-            if (step === 1) startVideoDelayTimer();
+            overlay.style.opacity = '0';
+            overlay.style.pointerEvents = 'none';
+            
+            // Iniciar timer de delay
+            startVideoDelayTimer(id);
         } else {
             video.pause();
-            overlay.classList.remove('hidden');
+            overlay.style.opacity = '1';
+            overlay.style.pointerEvents = 'all';
         }
     }
-};
+}
 
-function startVideoDelayTimer() {
-    if (state.videoTimerStarted || state.videoDelayPassed) return;
-    
-    state.videoTimerStarted = true;
-    setTimeout(() => {
-        state.videoDelayPassed = true;
+function startVideoDelayTimer(id) {
+    if (id === 1) {
+        if (state.videoTimerStarted || state.videoDelayPassed) return;
+        state.videoTimerStarted = true;
         
-        // Libera o botão visualmente
-        UI.nextBtn.classList.remove('locked-delayed');
-        const instruction = document.getElementById('video-instruction');
-        if (instruction) instruction.classList.add('hidden');
+        setTimeout(() => {
+            state.videoDelayPassed = true;
+            if (state.currentStep === 1) {
+                unlockButtonUI(1);
+            }
+        }, CONFIG.VIDEO_DELAY);
+    } else if (id === 2) {
+        if (state.video2TimerStarted || state.video2DelayPassed) return;
+        state.video2TimerStarted = true;
         
-        showToast('Botão Continuar liberado!', 'success');
-    }, CONFIG.VIDEO_DELAY);
+        setTimeout(() => {
+            state.video2DelayPassed = true;
+            if (state.currentStep === 3) {
+                unlockButtonUI(2);
+            }
+        }, CONFIG.VIDEO_DELAY);
+    }
+}
+
+function unlockButtonUI(videoNum) {
+    UI.nextBtn.classList.remove('locked-delayed');
+    const instructionId = videoNum === 1 ? 'video-instruction' : 'video-instruction-2';
+    const instruction = document.getElementById(instructionId);
+    if (instruction) instruction.classList.add('hidden');
+    showToast('Botão Continuar liberado!', 'success');
 }
 
 // Configuration
@@ -47,13 +66,16 @@ const CONFIG = {
 };
 
 // Application State
-const state = {
+let state = {
     currentStep: 1,
-    selectedDate: null,
-    selectedTime: null,
+    selectedDate: '',
+    selectedTime: '',
     isSubmitting: false,
     videoTimerStarted: false,
     videoDelayPassed: false,
+    video2TimerStarted: false,
+    video2DelayPassed: false,
+    bookingInProgress: false,
     bookedSlots: [] // Fetched from Supabase
 };
 
@@ -248,13 +270,19 @@ function updateUI() {
         UI.submitBtn.style.display = 'none';
         
         // 30s Delay Logic for Step 1
-        const instruction = document.getElementById('video-instruction');
+        const instruction1 = document.getElementById('video-instruction');
+        const instruction2 = document.getElementById('video-instruction-2');
+        
         if (state.currentStep === 1 && !state.videoDelayPassed) {
             UI.nextBtn.classList.add('locked-delayed');
-            if (instruction) instruction.classList.remove('hidden');
+            if (instruction1) instruction1.classList.remove('hidden');
+        } else if (state.currentStep === 3 && !state.video2DelayPassed) {
+            UI.nextBtn.classList.add('locked-delayed');
+            if (instruction2) instruction2.classList.remove('hidden');
         } else {
             UI.nextBtn.classList.remove('locked-delayed');
-            if (instruction) instruction.classList.add('hidden');
+            if (instruction1) instruction1.classList.add('hidden');
+            if (instruction2) instruction2.classList.add('hidden');
         }
     }
 
