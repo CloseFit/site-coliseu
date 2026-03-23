@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin — Coliseu</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Auth Gate -->
+    <div id="auth-gate">
+        <div class="auth-box">
+            <div class="auth-logo">🏛️</div>
+            <h1>Coliseu Admin</h1>
+            <p>Acesso restrito</p>
+            <div class="auth-input-wrap">
+                <input type="password" id="auth-input" placeholder="Senha de acesso" autocomplete="current-password">
+                <button id="auth-btn" onclick="checkAuth()"><i class="fas fa-arrow-right"></i></button>
+            </div>
+            <p class="auth-hint" id="auth-error"></p>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="dashboard" style="display:none;">
+        <header>
+            <div class="header-inner">
+                <div class="header-brand">
+                    <span class="brand-icon">🏛️</span>
+                    <div>
+                        <div class="brand-title">Coliseu <span>Admin</span></div>
+                        <div class="brand-sub">Pesquisa de Grade Inteligente</div>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-icon" onclick="exportCSV()" title="Exportar CSV">
+                        <i class="fas fa-file-csv"></i> Exportar
+                    </button>
+                    <button class="btn-icon btn-danger" onclick="logout()" title="Sair">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- Stats Row -->
+            <div class="stats-row" id="stats-row">
+                <!-- Populated by JS -->
+            </div>
+
+            <!-- Heatmap -->
+            <section class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-fire"></i> Mapa de Calor — Demanda por Horário</h2>
+                    <div class="legend">
+                        <span class="legend-item"><span class="heat-0"></span>0</span>
+                        <span class="legend-item"><span class="heat-low"></span>Baixo</span>
+                        <span class="legend-item"><span class="heat-mid"></span>Médio</span>
+                        <span class="legend-item"><span class="heat-high"></span>Alto</span>
+                    </div>
+                </div>
+                <div class="heatmap-wrapper">
+                    <div id="heatmap-table"></div>
+                </div>
+            </section>
+
+            <!-- Filters + Student List -->
+            <section class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-users"></i> Lista de Inscritos</h2>
+                    <div class="filters">
+                        <select id="filter-type" onchange="applyFilters()">
+                            <option value="">Todos os planos</option>
+                            <option value="Normal">Normal</option>
+                            <option value="Pass">Pass</option>
+                            <option value="Inativo">Inativo</option>
+                        </select>
+                        <select id="filter-freq" onchange="applyFilters()">
+                            <option value="">Todas as frequências</option>
+                            <option value="2x">2x</option>
+                            <option value="3x">3x</option>
+                            <option value="4x">4x</option>
+                            <option value="5x">5x</option>
+                        </select>
+                        <div class="search-wrap">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="filter-search" placeholder="Buscar por nome..." oninput="applyFilters()">
+                        </div>
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <table id="student-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nome</th>
+                                <th>WhatsApp</th>
+                                <th>Plano</th>
+                                <th>Frequência</th>
+                                <th>Horários Preferidos</th>
+                                <th>Outro Esporte</th>
+                                <th>Obs.</th>
+                            </tr>
+                        </thead>
+                        <tbody id="student-tbody"></tbody>
+                    </table>
+                    <div id="table-empty" class="empty-state" style="display:none;">
+                        <i class="fas fa-search"></i>
+                        <p>Nenhum resultado encontrado.</p>
+                    </div>
+                </div>
+                <div class="table-footer" id="table-footer"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="main.js"></script>
+</body>
+</html>
