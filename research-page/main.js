@@ -6,7 +6,8 @@ const CONFIG = {
     SUPABASE_KEY: 'sb_publishable_RReaq3MLFL3G8_6Q5sqlMw_j80yV-lj',
     STORAGE_KEY: 'coliseu_quiz_draft',
     WHATSAPP_OFFICIAL: '5573999911525',
-    VIDEO_DELAY: 30000 // 30s
+    VIDEO_DELAY: 30000, // 30s
+    GOOGLE_SHEETS_WEBHOOK: 'https://script.google.com/macros/s/AKfycbyQ_81oivBC_9mCa0eYdlre3q-aBmBT6KgrN5ykPqhvviAyP9yon2QMHW7z9gHZRlULew/exec'
 };
 
 // Application State
@@ -498,6 +499,16 @@ async function handleSubmit(e) {
         // Limpa o rascunho salvo após envio bem-sucedido
         localStorage.removeItem(CONFIG.STORAGE_KEY);
         
+        // Dispara envio para o Google Sheets em background (CRM da Recepção)
+        fetch(CONFIG.GOOGLE_SHEETS_WEBHOOK, {
+            method: 'POST',
+            mode: 'no-cors', // Evita problemas de CORS com o Apps Script
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        }).catch(e => console.error("Erro ao enviar para a planilha:", e));
+
         // Efeito WOW: Confetti
         triggerSuccessConfetti();
 
