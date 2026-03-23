@@ -362,6 +362,10 @@ function toggleOtherObstacle(value) {
 // Handle Form Submission
 async function handleSubmit(e) {
     if (e) e.preventDefault();
+    
+    // Validação Manual (Evita dependência de 'required' HTML que falha em campos ocultos ou no mobile)
+    if (!validateStep(state.currentStep)) return;
+
     if (state.isSubmitting) return;
 
     // Captura os riscos de saúde dos novos seletores Sim/Não

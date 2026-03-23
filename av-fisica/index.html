@@ -34,7 +34,7 @@
             <p class="step-indicator" id="step-indicator">Passo 1 de 4</p>
         </header>
 
-        <form id="assessment-form">
+        <form id="assessment-form" novalidate>
             <!-- Passo 1: Vídeo Intro Avaliação -->
             <section class="quiz-step active" data-step="1">
                 <h1>SUA AVALIAÇÃO <br>FÍSICA</h1>
@@ -180,6 +180,11 @@
                 <div class="input-group">
                     <label>Toma algum medicamento de uso contínuo?</label>
                     <input type="text" id="medications" placeholder="Qual? (Se não, deixe em branco)">
+                </div>
+                
+                <div class="input-group">
+                    <label>Histórico de Saúde / Observações</label>
+                    <textarea id="health_history" rows="2" placeholder="Cirurgias, problemas crônicos ou qualquer observação relevante..."></textarea>
                 </div>
 
                 <div class="health-checks-container">
