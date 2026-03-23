@@ -1,11 +1,17 @@
 // Video Helper — must be global and defined first
-window.handleVideoPlay = (step) => {
+window.toggleVideo = (step) => {
     const videoId = step === 1 ? 'video-intro-1' : 'video-step-2';
     const video = document.getElementById(videoId);
     const overlay = document.getElementById(`overlay-${step}`);
+    
     if (video && overlay) {
-        video.play().catch(() => {}); // catch user-gesture restriction gracefully
-        overlay.classList.add('hidden');
+        if (video.paused) {
+            video.play().catch(() => {});
+            overlay.classList.add('hidden');
+        } else {
+            video.pause();
+            overlay.classList.remove('hidden');
+        }
     }
 };
 
@@ -96,8 +102,8 @@ function setupEventListeners() {
     // Video overlay click listeners
     const overlay1 = document.getElementById('overlay-1');
     const overlay2 = document.getElementById('overlay-2');
-    if (overlay1) overlay1.addEventListener('click', () => handleVideoPlay(1));
-    if (overlay2) overlay2.addEventListener('click', () => handleVideoPlay(2));
+    if (overlay1) overlay1.addEventListener('click', () => toggleVideo(1));
+    if (overlay2) overlay2.addEventListener('click', () => toggleVideo(2));
 }
 
 /**
