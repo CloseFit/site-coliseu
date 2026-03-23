@@ -17,15 +17,18 @@ window.toggleVideo = (step) => {
 };
 
 function startVideoDelayTimer() {
-    if (state.videoTimerStarted) return;
+    if (state.videoTimerStarted || state.videoDelayPassed) return;
     
     state.videoTimerStarted = true;
     setTimeout(() => {
         state.videoDelayPassed = true;
-        if (state.currentStep === 1) {
-            UI.nextBtn.classList.remove('hidden-delayed');
-            UI.nextBtn.classList.add('show-delayed');
-        }
+        
+        // Libera o botão visualmente
+        UI.nextBtn.classList.remove('locked-delayed');
+        const instruction = document.getElementById('video-instruction');
+        if (instruction) instruction.classList.add('hidden');
+        
+        showToast('Botão Continuar liberado!', 'success');
     }, CONFIG.VIDEO_DELAY);
 }
 
@@ -245,11 +248,13 @@ function updateUI() {
         UI.submitBtn.style.display = 'none';
         
         // 30s Delay Logic for Step 1
+        const instruction = document.getElementById('video-instruction');
         if (state.currentStep === 1 && !state.videoDelayPassed) {
-            UI.nextBtn.classList.add('hidden-delayed');
-            UI.nextBtn.classList.remove('show-delayed');
+            UI.nextBtn.classList.add('locked-delayed');
+            if (instruction) instruction.classList.remove('hidden');
         } else {
-            UI.nextBtn.classList.remove('hidden-delayed', 'show-delayed');
+            UI.nextBtn.classList.remove('locked-delayed');
+            if (instruction) instruction.classList.add('hidden');
         }
     }
 

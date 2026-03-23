@@ -250,6 +250,36 @@ h1 {
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Delayed Button Interaction (Step 1) */
+.locked-delayed {
+    opacity: 0.3 !important;
+    pointer-events: none !important;
+    filter: grayscale(1);
+    transform: scale(0.98);
+}
+
+.video-instruction {
+    text-align: center;
+    margin: 20px auto 10px;
+    font-size: 13px;
+    color: var(--brand-red);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: rgba(225, 29, 72, 0.1);
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: inline-block;
+    width: fit-content;
+    transition: all 0.5s ease;
+}
+
+.video-instruction.hidden {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+}
+
 .btn-primary.show-delayed {
     opacity: 1 !important;
     visibility: visible !important;
