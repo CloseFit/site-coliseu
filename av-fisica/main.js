@@ -364,6 +364,13 @@ async function handleSubmit(e) {
     if (e) e.preventDefault();
     if (state.isSubmitting) return;
 
+    // Captura os riscos de saúde dos novos seletores Sim/Não
+    const health_heart = document.querySelector('input[name="health_heart"]:checked')?.value === 'sim';
+    const health_dizzy = document.querySelector('input[name="health_dizzy"]:checked')?.value === 'sim';
+    const health_risks = [];
+    if (health_heart) health_risks.push('heart');
+    if (health_dizzy) health_risks.push('dizzy');
+
     const formData = {
         name: document.getElementById('name').value,
         whatsapp: 'N/A', 
@@ -376,10 +383,10 @@ async function handleSubmit(e) {
         main_obstacle: document.getElementById('main_obstacle').value,
         obstacle_other: document.getElementById('obstacle_other').value || '',
         other_sports: document.getElementById('other_sports').value || '',
-        health_history: document.getElementById('health_history').value || 'N/A',
+        health_history: document.getElementById('health_history')?.value || 'N/A',
         limitations: document.getElementById('limitations').value || 'Nenhuma',
         medications: document.getElementById('medications').value || 'Nenhum',
-        risks: Array.from(document.querySelectorAll('input[name="health_risk"]:checked')).map(i => i.value),
+        risks: health_risks,
         created_at: new Date().toISOString()
     };
 

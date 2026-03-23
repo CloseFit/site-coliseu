@@ -182,15 +182,34 @@
                     <input type="text" id="medications" placeholder="Qual? (Se não, deixe em branco)">
                 </div>
 
-                <div class="radio-group-vertical">
-                    <label class="check-label">
-                        <input type="checkbox" name="health_risk" value="heart">
-                        <span>Problema cardíaco ou pressão alta?</span>
-                    </label>
-                    <label class="check-label">
-                        <input type="checkbox" name="health_risk" value="dizzy">
-                        <span>Sente tonturas ou dores no peito ao treinar?</span>
-                    </label>
+                <div class="health-checks-container">
+                    <div class="health-check-item">
+                        <label>Problema cardíaco ou pressão alta?</label>
+                        <div class="toggle-group">
+                            <label class="toggle-option">
+                                <input type="radio" name="health_heart" value="nao" checked>
+                                <span>Não</span>
+                            </label>
+                            <label class="toggle-option">
+                                <input type="radio" name="health_heart" value="sim">
+                                <span>Sim</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="health-check-item">
+                        <label>Sente tonturas ou dores no peito ao treinar?</label>
+                        <div class="toggle-group">
+                            <label class="toggle-option">
+                                <input type="radio" name="health_dizzy" value="nao" checked>
+                                <span>Não</span>
+                            </label>
+                            <label class="toggle-option">
+                                <input type="radio" name="health_dizzy" value="sim">
+                                <span>Sim</span>
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </section>
 
