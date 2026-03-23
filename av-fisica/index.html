@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clube Coliseu | Agendamento de Avaliação Física</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <!-- SEO & Social Preview -->
+    <meta name="description" content="Agende sua Avaliação Física e preencha sua Anamnese para iniciar sua jornada no Clube Coliseu.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="🏋️ Coliseu | Agendamento de Avaliação Física">
+    <meta property="og:description" content="Garanta seu horário e preencha sua ficha de saúde.">
+    <meta property="og:image" content="https://gzvflbsjksmriqfaiizr.supabase.co/storage/v1/object/public/assets/og-coliseu.png">
+    <meta property="og:locale" content="pt_BR">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;800&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-coliseu">
+                <img src="logo-coliseu.svg" alt="Coliseu Logo">
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <p class="step-indicator" id="step-indicator">Passo 1 de 5</p>
+        </header>
+
+        <form id="assessment-form">
+            <!-- Passo 1: Vídeo Intro Avaliação -->
+            <section class="quiz-step active" data-step="1">
+                <h1>SUA AVALIAÇÃO <br>FÍSICA</h1>
+                <p class="subtitle">Assista ao recado do Coach sobre a importância do diagnóstico para seu resultado.</p>
+                <div class="video-container">
+                    <video id="video-step-1" playsinline preload="auto">
+                        <source src="https://gzvflbsjksmriqfaiizr.supabase.co/storage/v1/object/public/assets/VD-LP-PESQUISA-DE-GRADE.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-overlay" id="overlay-1" onclick="handleVideoPlay(1)">
+                        <div class="play-button-wrapper"><div class="play-button"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Passo 2: Identificação -->
+            <section class="quiz-step" data-step="2">
+                <h1>IDENTIFICAÇÃO</h1>
+                <p class="subtitle">Confirme seus dados para vincularmos ao seu agendamento.</p>
+                <div class="input-group">
+                    <label>Nome Completo</label>
+                    <input type="text" id="name" placeholder="Digite seu nome..." required>
+                </div>
+                <div class="input-group">
+                    <label>WhatsApp</label>
+                    <input type="tel" id="whatsapp" placeholder="(00) 00000-0000" required>
+                </div>
+            </section>
+
+            <!-- Passo 3: Agendamento -->
+            <section class="quiz-step" data-step="3">
+                <h1>ESCOLHA SEU HORÁRIO</h1>
+                <p class="subtitle">Selecione uma data e um horário disponível para sua avaliação (20 min).</p>
+                
+                <div class="calendar-controls">
+                    <select id="date-selector" class="custom-select" required>
+                        <option value="" disabled selected>Selecionar Dia</option>
+                        <!-- Gerado dinamicamente: Terças, Quintas e Sábados -->
+                    </select>
+                </div>
+
+                <div id="slots-container" class="slots-grid">
+                    <!-- Gerado dinamicamente -->
+                    <p class="empty-msg">Selecione uma data para ver os horários disponíveis.</p>
+                </div>
+
+                <input type="hidden" id="selected-slot" name="selected_slot" required>
+            </section>
+
+            <!-- Passo 4: Vídeo Intro Anamnese -->
+            <section class="quiz-step" data-step="4">
+                <h1>SUA SAÚDE</h1>
+                <p class="subtitle">Antes de terminar, precisamos entender seu histórico de saúde.</p>
+                <div class="video-container">
+                    <video id="video-step-2" playsinline preload="auto">
+                        <source src="https://gzvflbsjksmriqfaiizr.supabase.co/storage/v1/object/public/assets/VD-LP-PESQUISA-DE-GRADE.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-overlay" id="overlay-2" onclick="handleVideoPlay(2)">
+                        <div class="play-button-wrapper"><div class="play-button"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Passo 5: Anamnese -->
+            <section class="quiz-step" data-step="5">
+                <h1>ANAMNESE</h1>
+                <p class="subtitle">Responda com sinceridade para sua segurança e melhor performance.</p>
+                
+                <div class="input-group">
+                    <label>Qual seu principal objetivo?</label>
+                    <select id="main_goal" class="custom-select" required>
+                        <option value="" disabled selected>Selecione...</option>
+                        <option value="Emagrecimento">Emagrecimento</option>
+                        <option value="Hipertrofia">Ganho de Massa (Hipertrofia)</option>
+                        <option value="Performance">Performance / Condicionamento</option>
+                        <option value="Saude">Saúde / Bem-estar</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Tem alguma lesão ou limitação física?</label>
+                    <textarea id="limitations" rows="2" placeholder="Ex: Dor no joelho, hérnia, etc. Se não, deixe em branco."></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label>Toma algum medicamento de uso contínuo?</label>
+                    <input type="text" id="medications" placeholder="Qual? (Se não, deixe em branco)">
+                </div>
+
+                <div class="radio-group-vertical">
+                    <label class="check-label">
+                        <input type="checkbox" name="health_risk" value="heart">
+                        <span>Problema cardíaco ou pressão alta?</span>
+                    </label>
+                    <label class="check-label">
+                        <input type="checkbox" name="health_risk" value="dizzy">
+                        <span>Sente tonturas ou dores no peito ao treinar?</span>
+                    </label>
+                </div>
+            </section>
+
+            <div class="nav-buttons">
+                <button type="button" id="prev-btn" class="btn-outline" style="display:none">Voltar</button>
+                <button type="button" id="next-btn" class="btn-primary">Continuar</button>
+                <button type="submit" id="submit-btn" class="btn-primary" style="display:none">Finalizar Agendamento</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="success-modal">
+        <div class="modal-inner">
+            <div style="font-size: 50px; margin-bottom: 20px;">📅</div>
+            <h2 style="color:var(--brand-red); margin-bottom:15px; font-family:'Outfit'; font-weight:800;">AGENDADO COM SUCESSO!</h2>
+            <p id="success-message" style="color: #aaa; line-height: 1.6;">Sua avaliação está confirmada. Nos vemos em breve no Coliseu!</p>
+            <div style="margin-top: 30px;">
+                <button onclick="window.location.reload()" class="btn-primary">Concluir</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
