@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/av-fisica/:path*", "destination": "/av-fisica/:path*" },
+    { "source": "/:path*", "destination": "/research-page/:path*" }
+  ]
+}
