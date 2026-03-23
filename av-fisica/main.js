@@ -345,6 +345,20 @@ function toggleOtherGoal(value) {
     }
 }
 
+// Toggle Other Obstacle Field
+function toggleOtherObstacle(value) {
+    const container = document.getElementById('obstacle_other_container');
+    const input = document.getElementById('obstacle_other');
+    if (value === 'Outro') {
+        container.style.display = 'block';
+        input.setAttribute('required', 'true');
+    } else {
+        container.style.display = 'none';
+        input.removeAttribute('required');
+        input.value = '';
+    }
+}
+
 // Handle Form Submission
 async function handleSubmit(e) {
     if (e) e.preventDefault();
@@ -360,6 +374,7 @@ async function handleSubmit(e) {
         experience_level: document.getElementById('experience_level').value,
         weekly_frequency: document.getElementById('weekly_frequency').value,
         main_obstacle: document.getElementById('main_obstacle').value,
+        obstacle_other: document.getElementById('obstacle_other').value || '',
         other_sports: document.getElementById('other_sports').value || '',
         health_history: document.getElementById('health_history').value || 'N/A',
         limitations: document.getElementById('limitations').value || 'Nenhuma',

@@ -152,7 +152,7 @@
 
                 <div class="input-group">
                     <label>Qual seu maior obstáculo hoje?</label>
-                    <select id="main_obstacle" class="custom-select" required>
+                    <select id="main_obstacle" class="custom-select" required onchange="toggleOtherObstacle(this.value)">
                         <option value="" disabled selected>O que te impede de ser constante?</option>
                         <option value="Falta de tempo">Falta de tempo</option>
                         <option value="Desmotivação">Desmotivação / Preguiça</option>
@@ -160,6 +160,11 @@
                         <option value="Alimentação">Dificuldade com alimentação</option>
                         <option value="Outro">Outro</option>
                     </select>
+                </div>
+
+                <div class="input-group" id="obstacle_other_container" style="display: none;">
+                    <label>Qual seria esse outro obstáculo?</label>
+                    <input type="text" id="obstacle_other" placeholder="Descreva aqui...">
                 </div>
 
                 <div class="input-group">
