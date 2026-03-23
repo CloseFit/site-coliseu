@@ -148,17 +148,19 @@ function setupEventListeners() {
     }
 
     // Condicional: mostra campo de detalhe quando "Sim" é selecionado
-    UI.form.addEventListener('change', (e) => {
-        if (e.target.name === 'other_sport') {
-            const field = document.getElementById('other-sport-field');
-            if (field) {
-                const isYes = e.target.value === 'Sim';
-                field.classList.toggle('visible', isYes);
-                const detail = document.getElementById('other_sport_detail');
-                if (!isYes && detail) detail.value = '';
+    if (UI.form) {
+        UI.form.addEventListener('change', (e) => {
+            if (e.target.name === 'other_sport') {
+                const field = document.getElementById('other-sport-field');
+                if (field) {
+                    const isYes = e.target.value === 'Sim';
+                    field.classList.toggle('visible', isYes);
+                    const detail = document.getElementById('other_sport_detail');
+                    if (!isYes && detail) detail.value = '';
+                }
             }
-        }
-    });
+        });
+    }
 }
 
 function handleAddSchedule() {
@@ -565,4 +567,4 @@ function showToast(message, type = 'info') {
     }, 100);
 }
 
-init();
+document.addEventListener('DOMContentLoaded', init);
