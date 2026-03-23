@@ -430,8 +430,40 @@ async function handleSubmit(e) {
 
         if (error) throw error;
 
-        confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+        // Confetti!
+        confetti({ 
+            particleCount: 150, 
+            spread: 70, 
+            origin: { y: 0.6 },
+            colors: ['#E31B23', '#ffffff', '#000000']
+        });
+
+        // WhatsApp Redirect Setup
+        const waNumber = '5573999911525';
+        const waMessage = encodeURIComponent(
+            `Olá! Acabei de agendar minha Avaliação Física no Clube Coliseu. 📅\n\n` +
+            `*Nome:* ${formData.name}\n` +
+            `*Data:* ${formData.date}\n` +
+            `*Horário:* ${formData.time}\n\n` +
+            `Aguardo o retorno para confirmação!`
+        );
+        const waUrl = `https://wa.me/${waNumber}?text=${waMessage}`;
+        
+        // Update conclusion button
+        const conclusionBtn = document.querySelector('#success-modal .btn-primary');
+        if (conclusionBtn) {
+            conclusionBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Confirmar no WhatsApp';
+            conclusionBtn.onclick = () => window.location.href = waUrl;
+        }
+
         UI.successModal.style.display = 'flex';
+
+        // Auto-redirect after 5 seconds
+        setTimeout(() => {
+            if (UI.successModal.style.display === 'flex') {
+                window.location.href = waUrl;
+            }
+        }, 5000);
     } catch (err) {
         showToast('Erro ao salvar: ' + err.message, 'error');
         state.isSubmitting = false;
