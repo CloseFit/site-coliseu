@@ -92,6 +92,12 @@ function setupEventListeners() {
     UI.nextBtn.onclick = () => navigate(1);
     UI.prevBtn.onclick = () => navigate(-1);
     UI.form.onsubmit = handleSubmit;
+
+    // Video overlay click listeners
+    const overlay1 = document.getElementById('overlay-1');
+    const overlay2 = document.getElementById('overlay-2');
+    if (overlay1) overlay1.addEventListener('click', () => handleVideoPlay(1));
+    if (overlay2) overlay2.addEventListener('click', () => handleVideoPlay(2));
 }
 
 /**
