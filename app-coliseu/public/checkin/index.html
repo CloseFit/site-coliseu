@@ -41,13 +41,14 @@
     <script>
         async function initWebcam() {
             const video = document.getElementById('webcam');
+            const container = document.querySelector('.webcam-container');
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
                 video.srcObject = stream;
             } catch (err) {
                 console.error("Error accessing webcam: ", err);
-                // Hide webcam wrapper if access is denied or no camera found
-                document.querySelector('.webcam-container').style.display = 'none';
+                // Keep the circular container empty (black) so the layout stays correct
+                container.style.border = '3px dashed rgba(255, 255, 255, 0.2)';
             }
         }
         
