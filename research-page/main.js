@@ -7,7 +7,7 @@ const CONFIG = {
     STORAGE_KEY: 'coliseu_quiz_draft',
     WHATSAPP_OFFICIAL: '5573999911525',
     VIDEO_DELAY: 30000, // 30s
-    GOOGLE_SHEETS_WEBHOOK: 'https://script.google.com/macros/s/AKfycbyQ_81oivBC_9mCa0eYdlre3q-aBmBT6KgrN5ykPqhvviAyP9yon2QMHW7z9gHZRlULew/exec'
+    GOOGLE_SHEETS_WEBHOOK: 'https://script.google.com/macros/s/AKfycbxc_sYz4SpGpWUIGuhDHV28QLrlkWa8aVoA87V7UFJmRhCkHeHPRcTkC4w3u-25yS8kBQ/exec'
 };
 
 // Application State

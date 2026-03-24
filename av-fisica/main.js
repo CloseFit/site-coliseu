@@ -56,7 +56,7 @@ const CONFIG = {
     TOTAL_STEPS: 4,
     SUPABASE_URL: 'https://gzvflbsjksmriqfaiizr.supabase.co',
     SUPABASE_KEY: 'sb_publishable_RReaq3MLFL3G8_6Q5sqlMw_j80yV-lj',
-    GOOGLE_SHEETS_WEBHOOK: 'https://script.google.com/macros/s/AKfycbyQ_81oivBC_9mCa0eYdlre3q-aBmBT6KgrN5ykPqhvviAyP9yon2QMHW7z9gHZRlULew/exec',
+    GOOGLE_SHEETS_WEBHOOK: 'https://script.google.com/macros/s/AKfycbxc_sYz4SpGpWUIGuhDHV28QLrlkWa8aVoA87V7UFJmRhCkHeHPRcTkC4w3u-25yS8kBQ/exec',
     VIDEO_DELAY: 30000,
     SLOT_DURATION: 20, // minutes
     SCHEDULE_RULE: {
