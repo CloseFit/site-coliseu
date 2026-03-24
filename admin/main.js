@@ -4,39 +4,84 @@
 const CONFIG = {
     SUPABASE_URL: 'https://gzvflbsjksmriqfaiizr.supabase.co',
     SUPABASE_KEY: 'sb_publishable_RReaq3MLFL3G8_6Q5sqlMw_j80yV-lj',
-    ADMIN_PASS:   'coliseu2025', // Altere conforme necessário
     DAYS:         ['SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB'],
     DAYS_FULL:    ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
     HOURS:        ['05h','06h','07h','08h','09h','10h','11h','12h','16h','17h','18h','19h','20h','21h']
 };
 
+// Supabase client (singleton)
+const _client = supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_KEY);
+
 // ============================================================
 // AUTH
 // ============================================================
-function checkAuth() {
-    const input = document.getElementById('auth-input').value;
-    if (input === CONFIG.ADMIN_PASS) {
-        document.getElementById('auth-gate').style.display = 'none';
-        document.getElementById('dashboard').style.display = 'block';
-        init();
-    } else {
-        document.getElementById('auth-error').textContent = 'Senha incorreta. Tente novamente.';
-        document.getElementById('auth-input').value = '';
-        document.getElementById('auth-input').focus();
+async function checkAuth() {
+    const email    = document.getElementById('auth-email').value.trim();
+    const password = document.getElementById('auth-password').value;
+    const errEl    = document.getElementById('auth-error');
+    const btn      = document.getElementById('auth-btn');
+
+    if (!email || !password) {
+        errEl.textContent = 'Preencha e-mail e senha.';
+        return;
     }
+
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    errEl.textContent = '';
+
+    const { error } = await _client.auth.signInWithPassword({ email, password });
+
+    if (error) {
+        errEl.textContent = 'E-mail ou senha inválidos. Tente novamente.';
+        document.getElementById('auth-password').value = '';
+        document.getElementById('auth-password').focus();
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-arrow-right"></i>';
+    }
+    // onAuthStateChange cuida do redirecionamento ao dashboard
 }
 
-function logout() {
-    document.getElementById('dashboard').style.display = 'none';
-    document.getElementById('auth-gate').style.display = 'flex';
-    document.getElementById('auth-input').value = '';
+async function logout() {
+    await _client.auth.signOut();
+    // onAuthStateChange cuida de mostrar a tela de login
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('auth-input').addEventListener('keydown', e => {
-        if (e.key === 'Enter') checkAuth();
+    // Verificar se já existe sessão ativa
+    _client.auth.getSession().then(({ data: { session } }) => {
+        if (session) {
+            showDashboard();
+        }
+    });
+
+    // Reagir às mudanças de autenticação
+    _client.auth.onAuthStateChange((_event, session) => {
+        if (session) {
+            showDashboard();
+        } else {
+            showAuthGate();
+        }
+    });
+
+    // Enter key nos campos de login
+    ['auth-email', 'auth-password'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('keydown', e => { if (e.key === 'Enter') checkAuth(); });
     });
 });
+
+function showDashboard() {
+    document.getElementById('auth-gate').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    if (allStudents.length === 0) init();
+}
+
+function showAuthGate() {
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('auth-gate').style.display = 'flex';
+    document.getElementById('auth-password').value = '';
+}
 
 // ============================================================
 // STATE
@@ -76,10 +121,7 @@ async function init() {
 // ============================================================
 async function fetchStudents() {
     try {
-        const { createClient } = supabase;
-        const client = createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_KEY);
-
-        const { data, error } = await client
+        const { data, error } = await _client
             .from('crossfit_schedule_research')
             .select('student_name, student_whatsapp, student_type, weekly_frequency, schedule_selection, other_sport, other_sport_detail, observations, created_at')
             .order('created_at', { ascending: false });
@@ -266,10 +308,7 @@ function applyFilters() {
 // ============================================================
 async function fetchAvFisica() {
     try {
-        const { createClient } = supabase;
-        const client = createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_KEY);
-
-        const { data, error } = await client
+        const { data, error } = await _client
             .from('clube_coliseu_bookings')
             .select('*')
             .order('created_at', { ascending: false });

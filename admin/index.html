@@ -19,9 +19,12 @@
             <div class="auth-logo">🏛️</div>
             <h1>Coliseu Admin</h1>
             <p>Acesso restrito</p>
-            <div class="auth-input-wrap">
-                <input type="password" id="auth-input" placeholder="Senha de acesso" autocomplete="current-password">
-                <button id="auth-btn" onclick="checkAuth()"><i class="fas fa-arrow-right"></i></button>
+            <div class="auth-input-wrap" style="flex-direction: column; gap: 10px;">
+                <input type="email" id="auth-email" placeholder="E-mail de acesso" autocomplete="email" style="width: 100%;">
+                <div style="display: flex; gap: 8px; width: 100%;">
+                    <input type="password" id="auth-password" placeholder="Senha" autocomplete="current-password" style="flex: 1;">
+                    <button id="auth-btn" onclick="checkAuth()"><i class="fas fa-arrow-right"></i></button>
+                </div>
             </div>
             <p class="auth-hint" id="auth-error"></p>
         </div>
