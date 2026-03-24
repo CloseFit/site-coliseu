@@ -31,3 +31,5 @@ Design/
 
 # Documentação Privada (Local apenas)
 *.md
+*.obsidian
+.obsidian/
