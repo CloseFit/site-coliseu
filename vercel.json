@@ -2,6 +2,8 @@
   "rewrites": [
     { "source": "/admin", "destination": "/admin/index.html" },
     { "source": "/admin/(.*)", "destination": "/admin/$1" },
+    { "source": "/checkin", "destination": "/checkin/index.html" },
+    { "source": "/checkin/(.*)", "destination": "/checkin/$1" },
     { "source": "/av-fisica", "destination": "/av-fisica/index.html" },
     { "source": "/av-fisica/(.*)", "destination": "/av-fisica/$1" },
     { "source": "/(.*)", "destination": "/research-page/$1" }
