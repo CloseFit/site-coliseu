@@ -33,11 +33,11 @@ body {
     width: 100%;
     height: 100vh;
     display: grid;
-    grid-template-rows: auto 1fr auto auto;
-    align-items: center;
+    grid-template-rows: auto auto auto auto;
+    align-content: space-around;
     justify-items: center;
     padding: 3vh 24px 4vh;
-    gap: 2vh;
+    gap: 1vh;
 }
 
 /* ──────────────────────────────
@@ -143,17 +143,19 @@ body {
 
 .partners-logos {
     display: flex;
-    flex-direction: column;
-    gap: clamp(10px, 1.5vh, 20px);
+    flex-direction: row;
+    gap: clamp(10px, 3vw, 20px);
     align-items: center;
+    justify-content: center;
     width: 100%;
 }
 
 .partner-card {
-    width: min(100%, 320px);
+    flex: 1;
+    max-width: 48%;
     background: rgba(255, 255, 255, 0.96);
     border-radius: 18px;
-    padding: clamp(14px, 2.5vh, 28px) 28px;
+    padding: clamp(14px, 2.5vh, 26px) 16px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -230,9 +232,9 @@ body {
 ─────────────────────────────── */
 @media (orientation: portrait) {
     .container {
-        grid-template-rows: auto 1fr auto auto;
-        gap: 1.5vh;
-        padding: 2.5vh 20px 3.5vh;
+        align-content: space-around;
+        gap: 1vh;
+        padding: 2.5vh 16px 3vh;
     }
 
     .main-title {
@@ -241,5 +243,9 @@ body {
 
     .highlight {
         font-size: 17vw;
+    }
+
+    .partner-card {
+        padding: 12px 10px;
     }
 }
