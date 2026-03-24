@@ -189,13 +189,13 @@ body {
 }
 
 .partner-logo {
-    height: clamp(36px, 5vh, 70px);
+    height: 44px;
     max-width: 100%;
     object-fit: contain;
 }
 
 .partner-logo.wellhub {
-    height: clamp(28px, 4vh, 54px);
+    height: 44px;
 }
 
 /* ──────────────────────────────
