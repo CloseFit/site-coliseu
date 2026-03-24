@@ -13,8 +13,12 @@
 </head>
 <body>
     <div class="container">
-        <div class="logo-main">
+        <div class="logo-container">
             <img src="/research-page/logo-coliseu.svg" alt="Coliseu Logo" class="brand-logo">
+        </div>
+
+        <div class="webcam-container">
+            <video id="webcam" autoplay playsinline muted></video>
         </div>
 
         <main class="content">
@@ -34,5 +38,20 @@
     </div>
 
     <script src="/checkin/main.js"></script>
+    <script>
+        async function initWebcam() {
+            const video = document.getElementById('webcam');
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+                video.srcObject = stream;
+            } catch (err) {
+                console.error("Error accessing webcam: ", err);
+                // Hide webcam wrapper if access is denied or no camera found
+                document.querySelector('.webcam-container').style.display = 'none';
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', initWebcam);
+    </script>
 </body>
 </html>
