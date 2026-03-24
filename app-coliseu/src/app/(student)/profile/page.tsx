@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+// Refreshes VSCode TS Cache
 import ProfileForm from "./ProfileForm";
 import Link from "next/link";
 
