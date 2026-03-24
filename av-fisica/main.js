@@ -56,6 +56,7 @@ const CONFIG = {
     TOTAL_STEPS: 4,
     SUPABASE_URL: 'https://gzvflbsjksmriqfaiizr.supabase.co',
     SUPABASE_KEY: 'sb_publishable_RReaq3MLFL3G8_6Q5sqlMw_j80yV-lj',
+    GOOGLE_SHEETS_WEBHOOK: 'https://script.google.com/macros/s/AKfycbyQ_81oivBC_9mCa0eYdlre3q-aBmBT6KgrN5ykPqhvviAyP9yon2QMHW7z9gHZRlULew/exec',
     VIDEO_DELAY: 30000,
     SLOT_DURATION: 20, // minutes
     SCHEDULE_RULE: {
@@ -432,6 +433,21 @@ async function handleSubmit(e) {
             origin: { y: 0.6 },
             colors: ['#E31B23', '#ffffff', '#000000']
         });
+
+        // Integração Google Sheets (Webhook CRM)
+        try {
+            await fetch(CONFIG.GOOGLE_SHEETS_WEBHOOK, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    formSource: 'av-fisica',
+                    data: formData
+                })
+            });
+        } catch (webhookErr) {
+            console.error('Erro na integração com Sheets, mas os dados estão seguros no Supabase:', webhookErr);
+        }
 
         // WhatsApp Redirect Setup
         const waNumber = '5573999911525';

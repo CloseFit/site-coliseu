@@ -50,74 +50,119 @@
         </header>
 
         <main>
-            <!-- Stats Row -->
-            <div class="stats-row" id="stats-row">
-                <!-- Populated by JS -->
+            <!-- Tabs Navigation -->
+            <div class="admin-tabs">
+                <button class="tab-btn active" id="btn-tab-pesquisa" onclick="switchTab('pesquisa')"><i class="fas fa-list-check"></i> Pesquisa de Horários</button>
+                <button class="tab-btn" id="btn-tab-avfisica" onclick="switchTab('avfisica')"><i class="fas fa-dumbbell"></i> Avaliações Físicas</button>
             </div>
 
-            <!-- Heatmap -->
-            <section class="card">
-                <div class="card-header">
-                    <h2><i class="fas fa-fire"></i> Mapa de Calor — Demanda por Horário</h2>
-                    <div class="legend">
-                        <span class="legend-item"><span class="heat-0"></span>0</span>
-                        <span class="legend-item"><span class="heat-low"></span>Baixo</span>
-                        <span class="legend-item"><span class="heat-mid"></span>Médio</span>
-                        <span class="legend-item"><span class="heat-high"></span>Alto</span>
-                    </div>
+            <!-- TAB: PESQUISA -->
+            <div id="tab-pesquisa" class="tab-content active">
+                <!-- Stats Row -->
+                <div class="stats-row" id="stats-row">
+                    <!-- Populated by JS -->
                 </div>
-                <div class="heatmap-wrapper">
-                    <div id="heatmap-table"></div>
-                </div>
-            </section>
 
-            <!-- Filters + Student List -->
-            <section class="card">
-                <div class="card-header">
-                    <h2><i class="fas fa-users"></i> Lista de Inscritos</h2>
-                    <div class="filters">
-                        <select id="filter-type" onchange="applyFilters()">
-                            <option value="">Todos os planos</option>
-                            <option value="Normal">Normal</option>
-                            <option value="Pass">Pass</option>
-                            <option value="Inativo">Inativo</option>
-                        </select>
-                        <select id="filter-freq" onchange="applyFilters()">
-                            <option value="">Todas as frequências</option>
-                            <option value="2x">2x</option>
-                            <option value="3x">3x</option>
-                            <option value="4x">4x</option>
-                            <option value="5x">5x</option>
-                        </select>
-                        <div class="search-wrap">
-                            <i class="fas fa-search"></i>
-                            <input type="text" id="filter-search" placeholder="Buscar por nome..." oninput="applyFilters()">
+                <!-- Heatmap -->
+                <section class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-fire"></i> Mapa de Calor — Demanda por Horário</h2>
+                        <div class="legend">
+                            <span class="legend-item"><span class="heat-0"></span>0</span>
+                            <span class="legend-item"><span class="heat-low"></span>Baixo</span>
+                            <span class="legend-item"><span class="heat-mid"></span>Médio</span>
+                            <span class="legend-item"><span class="heat-high"></span>Alto</span>
                         </div>
                     </div>
-                </div>
-                <div class="table-wrap">
-                    <table id="student-table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Nome</th>
-                                <th>WhatsApp</th>
-                                <th>Plano</th>
-                                <th>Frequência</th>
-                                <th>Horários Preferidos</th>
-                                <th>Outro Esporte</th>
-                                <th>Obs.</th>
-                            </tr>
-                        </thead>
-                        <tbody id="student-tbody"></tbody>
-                    </table>
-                    <div id="table-empty" class="empty-state" style="display:none;">
-                        <i class="fas fa-search"></i>
-                        <p>Nenhum resultado encontrado.</p>
+                    <div class="heatmap-wrapper">
+                        <div id="heatmap-table"></div>
                     </div>
-                </div>
-                <div class="table-footer" id="table-footer"></div>
-            </section>
+                </section>
+
+                <!-- Filters + Student List -->
+                <section class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-users"></i> Lista de Inscritos</h2>
+                        <div class="filters">
+                            <select id="filter-type" onchange="applyFilters()">
+                                <option value="">Todos os planos</option>
+                                <option value="Normal">Normal</option>
+                                <option value="Pass">Pass</option>
+                                <option value="Inativo">Inativo</option>
+                            </select>
+                            <select id="filter-freq" onchange="applyFilters()">
+                                <option value="">Todas as frequências</option>
+                                <option value="2x">2x</option>
+                                <option value="3x">3x</option>
+                                <option value="4x">4x</option>
+                                <option value="5x">5x</option>
+                            </select>
+                            <div class="search-wrap">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="filter-search" placeholder="Buscar por nome..." oninput="applyFilters()">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-wrap">
+                        <table id="student-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nome</th>
+                                    <th>WhatsApp</th>
+                                    <th>Plano</th>
+                                    <th>Frequência</th>
+                                    <th>Horários Preferidos</th>
+                                    <th>Outro Esporte</th>
+                                    <th>Obs.</th>
+                                </tr>
+                            </thead>
+                            <tbody id="student-tbody"></tbody>
+                        </table>
+                        <div id="table-empty" class="empty-state" style="display:none;">
+                            <i class="fas fa-search"></i>
+                            <p>Nenhum resultado encontrado.</p>
+                        </div>
+                    </div>
+                    <div class="table-footer" id="table-footer"></div>
+                </section>
+            </div><!-- /tab-pesquisa -->
+
+            <!-- TAB: AVALIAÇÕES FÍSICAS -->
+            <div id="tab-avfisica" class="tab-content" style="display:none;">
+                <section class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-calendar-check"></i> Avaliações Agendadas</h2>
+                        <div class="filters">
+                            <div class="search-wrap">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="avfisica-search" placeholder="Buscar aluno..." oninput="applyAvFisicaFilters()">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-wrap">
+                        <table id="avfisica-table">
+                            <thead>
+                                <tr>
+                                    <th>Data / Hora</th>
+                                    <th>Nome do Aluno</th>
+                                    <th>WhatsApp</th>
+                                    <th>Objetivo Detalhado</th>
+                                    <th>Nível</th>
+                                    <th>Alerta de Saúde / Limitações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="avfisica-tbody"></tbody>
+                        </table>
+                        <div id="avfisica-empty" class="empty-state" style="display:none;">
+                            <i class="fas fa-search"></i>
+                            <p>Nenhum agendamento encontrado.</p>
+                        </div>
+                    </div>
+                    <div class="table-footer" id="avfisica-footer"></div>
+                </section>
+            </div><!-- /tab-avfisica -->
+
         </main>
     </div>
 

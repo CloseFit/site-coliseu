@@ -43,6 +43,23 @@ document.addEventListener('DOMContentLoaded', () => {
 // ============================================================
 let allStudents = [];
 let filteredStudents = [];
+let allAvFisica = [];
+let filteredAvFisica = [];
+
+// ============================================================
+// TABS
+// ============================================================
+function switchTab(tabId) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+    
+    document.getElementById(`btn-tab-${tabId}`).classList.add('active');
+    document.getElementById(`tab-${tabId}`).style.display = 'flex';
+
+    if (tabId === 'avfisica' && allAvFisica.length === 0) {
+        fetchAvFisica();
+    }
+}
 
 // ============================================================
 // INIT
@@ -242,6 +259,87 @@ function applyFilters() {
     });
 
     renderTable(filteredStudents);
+}
+
+// ============================================================
+// AVALIAÇÕES FÍSICAS (TAB 2)
+// ============================================================
+async function fetchAvFisica() {
+    try {
+        const { createClient } = supabase;
+        const client = createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_KEY);
+
+        const { data, error } = await client
+            .from('clube_coliseu_bookings')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        allAvFisica = data || [];
+        filteredAvFisica = [...allAvFisica];
+        renderAvFisicaTable(filteredAvFisica);
+    } catch (err) {
+        console.error('Erro ao buscar avaliações:', err);
+    }
+}
+
+function renderAvFisicaTable(bookings) {
+    const tbody = document.getElementById('avfisica-tbody');
+    const emptyState = document.getElementById('avfisica-empty');
+    const footer = document.getElementById('avfisica-footer');
+
+    if (bookings.length === 0) {
+        tbody.innerHTML = '';
+        emptyState.style.display = 'flex';
+        footer.textContent = '';
+        return;
+    }
+
+    emptyState.style.display = 'none';
+
+    tbody.innerHTML = bookings.map(b => {
+        // Formatar riscos em badges
+        const risks = Array.isArray(b.risks) ? b.risks : [];
+        const riskHtml = risks.length > 0
+            ? `<div class="slot-tags">${risks.map(r => `<span class="slot-tag" style="background:rgba(227,27,35,0.1); border-color:#E31B23; color:#E31B23;">${r}</span>`).join('')}</div>`
+            : `<span class="slot-empty">Nenhum</span>`;
+
+        // Objetivo principal + outro
+        const obj = b.main_goal === 'Outro' ? b.goal_other : b.main_goal;
+        const obstacles = b.main_obstacle === 'Outro' ? b.obstacle_other : b.main_obstacle;
+
+        return `<tr>
+            <td>
+                <strong>${b.date ? b.date.split('-').reverse().join('/') : '—'}</strong><br>
+                <span style="color:var(--text-2); font-size:11px;">às ${b.time || '—'}</span>
+            </td>
+            <td class="td-name">${escapeHtml(b.name || '—')}</td>
+            <td>${escapeHtml(b.whatsapp || '—')}</td>
+            <td><div class="obs-text">
+                <strong style="color:var(--text);">${escapeHtml(obj || '—')}</strong><br>
+                <span title="Dificuldade principal">⚠️ ${escapeHtml(obstacles || '—')}</span>
+            </div></td>
+            <td><span class="badge badge-normal">${escapeHtml(b.experience_level || '—')}</span></td>
+            <td>
+                ${riskHtml}
+                ${b.limitations ? `<div class="obs-text" style="margin-top:6px; color:#FFC107;">Limitações: ${escapeHtml(b.limitations)}</div>` : ''}
+                ${b.medications ? `<div class="obs-text" style="margin-top:4px; color:#1E90FF;">Medicamentos: ${escapeHtml(b.medications)}</div>` : ''}
+            </td>
+        </tr>`;
+    }).join('');
+
+    footer.textContent = `Exibindo ${bookings.length} de ${allAvFisica.length} agendamentos`;
+}
+
+function applyAvFisicaFilters() {
+    const search = document.getElementById('avfisica-search').value.toLowerCase().trim();
+
+    filteredAvFisica = allAvFisica.filter(b => {
+        return !search || (b.name || '').toLowerCase().includes(search) || (b.whatsapp || '').includes(search);
+    });
+
+    renderAvFisicaTable(filteredAvFisica);
 }
 
 // ============================================================
