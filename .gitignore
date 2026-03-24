@@ -33,3 +33,4 @@ Design/
 *.md
 *.obsidian
 .obsidian/
+.vercel
