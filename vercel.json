@@ -6,6 +6,8 @@
     { "source": "/checkin/(.*)", "destination": "/app-coliseu/public/checkin/$1" },
     { "source": "/av-fisica", "destination": "/app-coliseu/public/av-fisica/index.html" },
     { "source": "/av-fisica/(.*)", "destination": "/app-coliseu/public/av-fisica/$1" },
+    { "source": "/research-page", "destination": "/app-coliseu/public/research-page/index.html" },
+    { "source": "/research-page/(.*)", "destination": "/app-coliseu/public/research-page/$1" },
     { "source": "/", "destination": "/app-coliseu/public/research-page/index.html" },
     { "source": "/(.*)", "destination": "/app-coliseu/public/research-page/$1" }
   ]
