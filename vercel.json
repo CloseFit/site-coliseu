@@ -1,11 +1,12 @@
 {
   "rewrites": [
-    { "source": "/admin", "destination": "/admin/index.html" },
-    { "source": "/admin/(.*)", "destination": "/admin/$1" },
-    { "source": "/checkin", "destination": "/checkin/index.html" },
-    { "source": "/checkin/(.*)", "destination": "/checkin/$1" },
-    { "source": "/av-fisica", "destination": "/av-fisica/index.html" },
-    { "source": "/av-fisica/(.*)", "destination": "/av-fisica/$1" },
-    { "source": "/(.*)", "destination": "/research-page/$1" }
+    { "source": "/admin", "destination": "/app-coliseu/public/admin/index.html" },
+    { "source": "/admin/(.*)", "destination": "/app-coliseu/public/admin/$1" },
+    { "source": "/checkin", "destination": "/app-coliseu/public/checkin/index.html" },
+    { "source": "/checkin/(.*)", "destination": "/app-coliseu/public/checkin/$1" },
+    { "source": "/av-fisica", "destination": "/app-coliseu/public/av-fisica/index.html" },
+    { "source": "/av-fisica/(.*)", "destination": "/app-coliseu/public/av-fisica/$1" },
+    { "source": "/", "destination": "/app-coliseu/public/research-page/index.html" },
+    { "source": "/(.*)", "destination": "/app-coliseu/public/research-page/$1" }
   ]
 }
